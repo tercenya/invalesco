@@ -1,9 +1,15 @@
-#### resources
+### resources
 
+
+#### ruby client
 https://github.com/josephyi/taric
+
 https://github.com/francois-blanchard/riot_lol_api
 
+#### statistics
 http://en.wikipedia.org/wiki/Brier_score
+
+to find: 1982 paper by Yates RE: Brier Score decomposition
 
 
 
