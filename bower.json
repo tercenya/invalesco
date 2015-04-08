@@ -1,0 +1,23 @@
+{
+  "name": "invalesco",
+  "version": "0.0.1",
+  "authors": [
+    "Craig M. Wellington <cmwellington@gmail.com>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "~3.3.4"
+  }
+}

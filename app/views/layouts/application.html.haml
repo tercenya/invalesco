@@ -1,0 +1,43 @@
+!!! 5
+%html(lang="en")
+  %head
+    %meta(charset="utf-8")
+    %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %title= content_for?(:title) ? yield(:title) : @app_name
+
+    = csrf_meta_tags
+    = stylesheet_link_tag "application", :media => "all", 'data-turbolinks-track' => true
+    = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
+    = favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114'
+    = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72'
+    = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
+    = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
+    = javascript_include_tag "application", 'data-turbolinks-track' => true
+    ~ content_for(:head)
+
+  %body
+    .navbar.navbar-default.navbar-static-top
+      .container
+        %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %a.navbar-brand(href=root_path)= @app_name
+        / .navbar-collapse.collapse.navbar-responsive-collapse
+        /   %ul.nav.navbar-nav
+        /     %li= link_to "Link 1", "/path1"
+        /     %li= link_to "Link 2", "/path2"
+        /     %li= link_to "Link 3", "/path3"
+        /     %li= link_to "Link 3", "/path3"
+
+    .container
+      .row
+        .col-lg-12
+          = yield
+
+      %footer
+        %p
+          &copy; Arinya 2015
+
+    ~ content_for(:tail)
