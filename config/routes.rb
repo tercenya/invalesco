@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get 'champions', to: 'champion#index'
 
   get 'urf/champions', to: 'champion#urf_win_loss'
+  get 'urf/champions/distribution', to: 'champion#urf_win_loss_distribution'
+
+  get 'urf/players/distribution', to: 'player#level_distribution'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
