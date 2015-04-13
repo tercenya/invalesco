@@ -1,5 +1,5 @@
 module Urf
-  class ChampionWinLoss
+  class ChampionWinLossUnique
     include Mongoid::Document
 
     field :wins, type: Integer
