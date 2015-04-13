@@ -1,0 +1,47 @@
+%table.table
+  %thead
+    %tr
+      %th Ratio
+      %th # of Champions
+      %th Champions
+  %tbody
+    - @data.each do |h,k|
+      %tr
+        %td= h
+        %td= k.size
+        %td= k.map(&:champion).map(&:name).join(', ')
+
+%hr
+
+#win_loss_distribution
+:coffeescript
+  drawBarchart('#win_loss_distribution', #{ @data.transform_values(&:size).to_json })
+
+%hr
+
+%table.table
+  %tr
+    %th n
+    %td= @data.values.flatten.map(&:total).reduce(:+)
+
+  %tr
+    %th Average
+    %td= number_to_percentage @average * 100
+  %tr
+    %td
+      %b Weighted Average
+      %small (should be 50%)
+    %td= number_to_percentage @weighted_average * 100
+  %tr
+    %th Winnable
+    %td
+      = @winnable[true].size
+      = surround('(', ')') do
+        = number_to_percentage @winnable_ratio[true] * 100
+  %tr
+    %th Losers
+    %td
+      = @winnable[false].size
+      = surround('(', ')') do
+        = number_to_percentage @winnable_ratio[false] * 100
+
