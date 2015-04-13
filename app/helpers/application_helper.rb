@@ -1,6 +1,16 @@
 module ApplicationHelper
-  def champion_icon(name_or_id)
-    name = name_or_id.is_a?(Integer) ? Champion.find(name_or_id) : name_or_id.to_s
-    image_tag "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/#{name}.png"
+  DATA_DRAGON_VERSION = '5.7.2'
+
+  def champion_icon(champion)
+    name = case champion
+    when Integer
+      Champion.find(champion).key
+    when String
+      champion
+    when Champion
+      champion.key
+    end
+
+    image_tag "http://ddragon.leagueoflegends.com/cdn/#{DATA_DRAGON_VERSION}/img/champion/#{name}.png"
   end
 end
