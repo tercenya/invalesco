@@ -7,6 +7,9 @@ require "action_controller/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative '../lib/simple_linear_regression'
+require 'ostruct'
+
 module Invalesco
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
