@@ -28,6 +28,11 @@ class Match
     participants[5..9]
   end
 
+  # you can't call .team.participants, but this is close
+  def team_participants
+    [red_participants, blue_participants]
+  end
+
   def champions
     participants.map(&:champion)
   end

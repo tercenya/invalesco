@@ -1,0 +1,21 @@
+%h3 Player Rank Distribution
+
+%table.table
+  %thead
+    %tr
+      %th Rank
+      %th Wins
+      %th Losses
+  %tbody
+    - @data.each do |h,k|
+      %tr
+        %td= h
+        %td= k[:wins]
+        %td= k[:losses]
+
+%hr
+
+#win_loss_distribution
+/ :coffeescript
+/   drawOrdinalLinearBarchart('#win_loss_distribution', #{ @data.transform_values(&:size).to_json })
+

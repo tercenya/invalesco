@@ -1,7 +1,9 @@
+%h3 Unique Champion Lineups
+
 %table.table
   %thead
     %tr
-      %th Ratio
+      %th Win Rate
       %th # of Champions
       %th Champions
   %tbody
@@ -9,13 +11,15 @@
       %tr
         %td= h
         %td= k.size
-        %td= k.map(&:champion).map(&:name).join(', ')
+        %td
+          = raw k.map(&:champion).sort_by(&:name).map { |e| champion_link(e) }.join(', ').presence || '-'
+
 
 %hr
 
 #win_loss_distribution
 :coffeescript
-  drawBarchart('#win_loss_distribution', #{ @data.transform_values(&:size).to_json })
+  drawOrdinalLinearBarchart('#win_loss_distribution', #{ @data.transform_values(&:size).to_json })
 
 %hr
 

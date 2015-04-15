@@ -1,5 +1,5 @@
 module Urf
-  class PlayerLevelDistribution
+  class TeamLevelDistribution
     include Mongoid::Document
 
     field :count, type: Integer

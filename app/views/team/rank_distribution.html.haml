@@ -1,0 +1,30 @@
+%h3 Team Rank Distribution
+
+%table.table
+  %thead
+    %tr
+      %th Rank
+      %th Wins
+      %th Losses
+  %tbody
+    - @data.each do |e|
+      %tr
+        %td= e.id
+        %td= e.wins
+        %td= e.losses
+
+%hr
+
+#distribution
+:coffeescript
+  drawOrdinalBarchart('#distribution', #{ @chart.to_json })
+
+#wins
+:coffeescript
+  drawOrdinalBarchart('#wins', #{ @chart2.to_json })
+
+
+%table.table
+  %tr
+    %th n
+    %td= @data.map(&:total).reduce(:+)

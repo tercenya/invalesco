@@ -1,0 +1,25 @@
+%h3 Match-Player Rank Distribution
+
+%table.table
+  %thead
+    %tr
+      %th Rank
+      %th # of Teams
+  %tbody
+    - @data.each do |e|
+      %tr
+        %td= e.id
+        %td= e.count
+%hr
+
+#distribution
+:coffeescript
+  drawOrdinalLinearBarchart('#distribution', #{ @chart.to_json })
+
+%hr
+
+%table.table
+  %tr
+    %th n
+    %td= @data.map(&:count).reduce(:+)
+

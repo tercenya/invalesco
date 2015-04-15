@@ -1,0 +1,24 @@
+%h3 Team Level Distribution
+
+/ %table.table
+/   %thead
+/     %tr
+/       %th Levels
+/       %th # of Players
+/   %tbody
+/     - @data.each do |e|
+/       %tr
+/         %td= e.id
+/         %td= e.count
+/ %hr
+
+#distribution
+:coffeescript
+  drawLinearBarchart('#distribution', #{ @chart.to_json })
+
+%hr
+
+%table.table
+  %tr
+    %th n
+    %td= @data.map(&:count).reduce(:+)
