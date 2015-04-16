@@ -4,11 +4,11 @@ require_relative '../bootstrap'
 Match.delete_all
 count = 0
 
-Dir.glob("/code/riot/data/match/*.json") do |file|
+Dir.glob("/code/riot/data/match/*/*.json") do |file|
   json = JSON.parse(File.read(file))
   Match.create(json)
   count += 1
-  print '.' if count % 1000 == 0
+  print count if count % 1000 == 0
 end
 
 puts count

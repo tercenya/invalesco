@@ -1,15 +1,17 @@
 class ChampionController < ApplicationController
+  WIN_LOSS_CLASS = Urf::ChampionWinLossUnique
+
   def index
     @data = Champion.all
     render json: @data.to_json
   end
 
   def urf_win_loss
-    @data = Urf::ChampionWinLossUnique.all.sort_by(&:ratio)
+    @data = WIN_LOSS_CLASS.all.sort_by(&:ratio)
   end
 
   def urf_win_loss_distribution
-    all = Urf::ChampionWinLossUnique.all
+    all = WIN_LOSS_CLASS.all
     @count = all.size
 
     data = all.group_by do |e|

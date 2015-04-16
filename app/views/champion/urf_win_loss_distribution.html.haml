@@ -9,7 +9,10 @@
   %tbody
     - @data.each do |h,k|
       %tr
-        %td= h
+        %td.text-nowrap
+          = number_to_percentage h, precision: 0
+          &nbsp;-&nbsp;
+          = number_to_percentage (h + 1), precision: 0
         %td= k.size
         %td
           = raw k.map(&:champion).sort_by(&:name).map { |e| champion_link(e) }.join(', ').presence || '-'

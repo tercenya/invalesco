@@ -8,6 +8,8 @@ require "action_controller/railtie"
 Bundler.require(*Rails.groups)
 
 require_relative '../lib/simple_linear_regression'
+require_relative '../lib/brier'
+
 require 'ostruct'
 
 module Invalesco

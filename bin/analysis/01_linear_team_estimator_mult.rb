@@ -1,62 +1,42 @@
 #!/usr/bin/env ruby
 
-ENV["RAILS_ENV"] ||= "development"
-require 'rubygems'
-require 'bundler/setup'
+require_relative '../bootstrap'
 
-APP_PATH = File.expand_path('../../../config/application',  __FILE__)
-require File.expand_path('../../../config/boot',  __FILE__)
-require APP_PATH
-Rails.application.require_environment!
+require 'champion_estimator'
+require 'core_ext/numeric'
 
-require 'simple_linear_regression'
-require 'ostruct'
+all = Urf::ChampionWinLossUnique.all
+ratios = all.map(&:ratio)
+best = ratios.max
+worst = ratios.min
 
-class Numeric
-  def scale(a1, a2, b1, b2)
-    ((b2-b1) * (self - a1)) / (a2 - a1) + b1
+est = ChampionEstimator.new
+
+xs = (3..9).to_a
+ys = (10..20).to_a
+min = { i: 0, j: 0, bs: 1 }
+
+xs.each do |i|
+  ys.each do |j|
+    est.simple_run(:*) do |e,a|
+      low = i / 10.to_f
+      high = j / 10.to_f
+      a[e.id] = e.ratio.scale(worst, best, low, high)
+    end
+
+    puts "accuracy = #{est.accuracy}"
+    # puts "m = #{est.linear_regression}"
+    bs = est.brier
+    puts "brier = #{bs}"
+
+    if min[:bs] > bs
+      min = {i: i, j: j, bs: bs }
+    end
   end
 end
 
-# build the "points per champion"
-
-all = Urf::ChampionWinLoss.all
-ratios = all.map(&:ratio)
-puts ratios.inspect
-
-best = ratios.max
-puts "best is #{best}"
-worst = ratios.min
-puts "worst is #{worst}"
-
-points = all.each_with_object({}) do |e,a|
-  a[e.id] = e.ratio.scale(worst, best, 0.6, 1.4)
-end
-
-accuracy = 0
-results = []
-count = Match.all.size
-
-Match.all.each_with_index do |m,i|
-  blue_points = m.blue_characters.map { |c| points[c.id] }.reduce(:*)
-  red_points = m.red_characters.map { |c| points[c.id] }.reduce(:*)
-  predict = blue_points > red_points ? :blue : :red
-  correct = predict == m.winner
-  results << OpenStruct.new(blue: blue_points, red: red_points, winner: m.winner)
-  # puts "blue: #{blue_points}\tred: #{red_points}\t prediction: #{predict}\twinner: #{m.winner}\tcorrect: #{correct}"
-  accuracy += 1 if correct
-  puts i if i % 1000 == 0
-end
-
-puts "accuracy: #{accuracy / count.to_f * 100} %"
-
-xs = results.each_with_object([]) do |e,a|
-  a << (e.winner == :blue ? 1 : 0)
-end
-
-ys = results.each_with_object([]) do |e,a|
-  a << (e.blue / e.red)
-end
-
-lr = SimpleLinearRegression.new(xs, ys)
-puts "m=#{lr.slope}"
+puts
+puts min.inspect
+puts min[:i]
+puts min[:j]
+puts min[:bs]

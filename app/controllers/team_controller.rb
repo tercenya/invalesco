@@ -35,8 +35,8 @@ class TeamController < ApplicationController
       prev_upsets = 0
 
       unless a.empty?
-        prev_count = a[e.id + 1].count
-        prev_upsets =  a[e.id + 1].upsets
+        prev_count = a[e.id + 1].try(:count) || 0
+        prev_upsets =  a[e.id + 1].try(:upsets) || 0
       end
 
 
@@ -56,7 +56,7 @@ class TeamController < ApplicationController
     end
 
     @chart3 = raw_data.each_with_object({}) do |e,a|
-      a[e.id] = (50 - (e['upset'].values.reduce(:+) / e.count.to_f * 100)) * e.count / 50040 * 10
+      a[e.id] = (50 - (e['upset'].values.reduce(:+) / e.count.to_f * 100)) * e.count.to_f / Match.count * 100
     end
   end
 end

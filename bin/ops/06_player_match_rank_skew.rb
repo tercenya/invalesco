@@ -1,34 +1,10 @@
 #!/usr/bin/env ruby
 require_relative '../bootstrap'
+require 'invalesco/ranking'
 
 counts = {}
 
-def points(participant)
-  case participant.tier
-  when :unranked
-    0
-  when :bronze
-    1
-  when :silver
-    2
-  when :gold
-    3
-  when :platinum
-    4
-  when :diamond
-    5
-  when :challenger
-    6
-  when :master
-    7
-  else
-    throw 'unknown tier'
-  end
-end
-
-def team_points(participants)
-  participants.map { |e| points(e) }.reduce(:+)
-end
+include Ranking
 
 Match.all.each do |match|
   blue_points = team_points(match.blue_participants)
