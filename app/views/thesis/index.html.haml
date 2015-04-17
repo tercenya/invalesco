@@ -48,7 +48,7 @@
 %p
   The classic problem in this space thus:
   %i 'There's a 70% chance of rain on Thursday.'
-  If it rains, you say it was a decent prediction, but you are left high and dry by Friday, you can still say you are right, since it won't rain 3 times out 10.  The challenges to this kind of problem include
+  If it rains, you say it was a decent prediction, but if you are left high and dry by Friday, you can still say you are right, since it won't rain 3 times out 10.  The challenges to this kind of problem include
   %ul
     %li the forecast is itself a expressed as chance (a probability of the event occuring),
     %li you only have one observation, and the outcome is mutually exlcusive (either it rained or it did not), and
@@ -239,7 +239,7 @@
 
   It could also be the case that the Brier Score is a poor choice for scoring the prediction in League of Legends.  There is [active debate](http://www.dailykos.com/story/2012/11/12/1160597/-Election-forecasting-and-the-problem-with-the-Brier-Score) that the Brier score favors "safe" prediction and inherently discourages prediction outside of the a widely expected value - of which 50-50% is a fanatastic prediction for two evenly-matched teams in League of Legends.
 
-  Furthermore, a (log likihood)[http://en.wikipedia.org/wiki/Likelihood_function#Log-likelihood] scoring method may be superior when the outcome is heavily favored one direction.  Given the game's positive-feedback cycle and ancedotal correlations between [game events and outcome](http://www.leagueofgraphs.com/rankings/win-stats#firstblood), we may need to explore other scoring mechanisms.
+  Furthermore, a [log likihood](http://en.wikipedia.org/wiki/Likelihood_function) scoring method may be superior when the outcome is heavily favored one direction.  Given the game's positive-feedback cycle and ancedotal correlations between [game events and outcome](http://www.leagueofgraphs.com/rankings/win-stats#firstblood), we may need to explore other scoring mechanisms.
 
 %h2 A tour of the code
 
@@ -274,6 +274,20 @@ The git repository contains three branches which are not connected to the same t
 %h4 Branch: gh-pages
 :kramdown
   Although the underlying tool is a rails app, all pages are static once the data is generated, so the resultant pages were collected and uploaded as static resources.  This branch should have been created from a static site generator such as (middleman)[https://middlemanapp.com/], but since the rails app already had all the necessary resources, scraping its output was easier than creating yet a third project.
+
+
+%h2 Closing
+
+%h4 Special Thanks
+:kramdown
+  Dr. Henry Bryant, for the resources on stochastic simluation and probablstic analysis.
+
+  My WoW guild, [Vanquish @ Firetree](http://www.slightlyover9000.com/forums/), especially Jakeswims (for starting me on League), and maybe Browniess (for chewing me out about my Q's as Morgana).
+
+%h4 About the Author
+:kramdown
+  Arinya is a fan of many video games and hard challenges, a full time nerds and definately one of the [crazy ones](https://www.youtube.com/watch?v=8rwsuXHA7RA).  He's a former Senior DevOps Engineer for Apple, and is currently a staff member in the [Agricultural and Food Policy Center](https://afpc.tamu.edu/) at [Texas A&M University](http://ww.tamu.edu), a [Research and Extension Services](http://agrilife.org/agrilife-agencies/research-home/) unit in the department of [Department of Agricultural Economics](http://agecon.tamu.edu/).
+
 
 %hr
 %a{name: 'tldr'}
