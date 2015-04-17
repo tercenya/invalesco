@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'application#sample_match'
+  root 'thesis#index'
 
   get 'champions', to: 'champion#index'
 
@@ -10,6 +10,4 @@ Rails.application.routes.draw do
   get 'urf/teams/rank', to: 'team#rank_distribution'
   get 'urf/teams/rank/delta', to: 'team#rank_delta'
   get 'urf/teams/rank/upsets', to: 'team#rank_upsets'
-
-  get 'thesis', to: 'thesis#index'
 end
