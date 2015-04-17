@@ -9,7 +9,7 @@ class ChampionEstimator
   end
 
   def matches
-    @matches ||= Match.all.limit(500)
+    @matches ||= Match.all
   end
 
   def ratios
@@ -26,7 +26,7 @@ class ChampionEstimator
     matches.each_with_index do |m,i|
       blue_points = m.blue_characters.map { |c| points[c.id] }.reduce(reducer)
       red_points = m.red_characters.map { |c| points[c.id] }.reduce(reducer)
-
+      # puts "#{blue_points} vs #{red_points}"
       predict = blue_points > red_points ? :blue : :red
       correct = predict == m.winner
 
