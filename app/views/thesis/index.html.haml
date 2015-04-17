@@ -1,0 +1,86 @@
+%h1 Predicting A Priori Match Outcomes via Determistic and Stochastic Models
+
+%blockquote
+  Whoa there Charles Dickens, I didn't come here to read a novel!
+
+%p 
+  This is an academic treatise, and there is a good chance you may learn something in the process.  But if I cannot sway you to stay the course, you can just skip to the
+  = link_to 'TL;DR Summary', '#tldr'
+
+%h3 Purpose
+
+%blockquote
+  I would have the studies elective. Scholarship is to be created not by compulsion, but by awakening a pure interest in knowledge. The wise instructor accomplishes this by opening to his pupils precisely the attractions the study has for himself.
+  %footer Ralph Waldo Emerson
+
+%p This document and software serves several concurrent purposes
+
+%h3 Background
+
+:kramdown
+  _League of Legends_ is a popular online multiplayer game developed my Riot Games.  In normal play, the game pits two teams of 5 players against each other.  Each player selects one of 124 possible characters (called _champions_), each of which has various strengths and weaknesses.  Each champion has four abilities (such as a special attack or a healing spell)that can be activated by the player.  Each ability has a limit on how long the player must wait before using that ability again, called a _cooldown_.  The requist time can range from a few seconds to several minutes.
+
+  As both an April Fool's joke and a way to keep the game fun and interesting, Riot re-released the _Ultra Rapid Fire (URF) Mode_, which is best described by gaming site Kotaku (http://kotaku.com/league-of-legends-should-keep-its-ridiculous-april-fool-1695410106):
+
+%blockquote
+  The attack speed, movement speed, critical strike damage, and the rate at which players' characters in the game farmed gold were all bumped up. The cooldown times and mana costs for their special abilities were also decreased to such an extent that players could spend an entire game spamming their champions' most powerful attacks against one another every few seconds.
+
+  URF took everything that was normally meant to be carefully managed in League and handed it to its players in abundance. [Riot] threw caution to the wind in turn. Champions were suddenly able to wail on each other nonstop for the length of a whole game.
+
+
+%h3 Approach
+
+%ol
+  %li Analyze the factors that contribute to winning a LoL URF mode match.
+  %li Create an estimator
+  %li TODO
+
+%h2 Analysis of Winning Factors
+
+%h3 Champion Selection
+
+%p 
+  With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  Over the 100,000 downloaded URF mode matches, we only saw a XXXX team choices, and YYY team match ups - a tiny fraction of the total possiblities.  Although it is apparent from gameplay that teams exhibit synergies or disonnance based on composition, the analysis will have to focus on individual champions rather than the team as a whole in order to have enough data to create an estimator.
+
+
+%a{name: '#tldr'}
+%h3 TL;DR Summary
+
+%h6 Who were the best/worst champions in URF mode?
+%p 
+  The champions with the best win record include Sona (55%), Jax (54%), and TODO 
+  ;Thresh clocks in with a dismal 40% record. 
+
+%h6 Were the games 'won or lost at champion select'?
+%p
+  %b Somewhat.
+  Although the champion win rates had a nice bell-curve shape, only XX (YY%) of the 124 champions had overall winning records.
+  From just the champion selection alone, we can successfully predict the outcome of a match 58% of the time.
+
+%h6 Did higher-ranked players win more?
+%p
+  %b Yes and No.
+  Equally ranked teams were 50-50% across the board, regardless of the team's total experience.
+  However, for each rank of disparity over the opposition, the team increased their chances of winning by 1%.
+
+%h6 Does team rank disparity determine who wins?
+%p
+  %b Very rarely.
+  Riot's team matching system closely matches teams with similar experience/skill; the chance of a sizable difference in combined team rank decreases exponentially.
+
+%h6 Did better players pick better champions?
+%p
+  %b TODO
+  TODO
+
+%h6 Can you predict the outcome of a game before it starts?
+%p
+  %b Mostly.
+  %p TODO
+
+%h6 Can you predict Ranked games?
+%p
+  %b Not yet.
+  But the research suggests the model could be adapted to predict some aspects of Normal mode games.
+  
+  URF mode simplifies (or removes) many of the essential factors in Normal mode play.  You know, things like 'strategy' and 'managing resources'.

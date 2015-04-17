@@ -1,0 +1,2 @@
+class ThesisController < ApplicationController
+end
