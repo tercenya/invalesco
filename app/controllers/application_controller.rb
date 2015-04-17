@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :app_name
+  layout 'xjs'
 
   def app_name
     @app_name = 'Invalesco'

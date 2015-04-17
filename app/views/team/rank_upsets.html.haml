@@ -1,4 +1,4 @@
-%h3 % of upsets with a team rank delta >= x
+/ %h3 % of upsets with a team rank delta >= x
 
 / %table.table
 /   %thead
@@ -12,11 +12,11 @@
 /         %td= e.count
 / %hr
 
-#distribution
-:coffeescript
-  drawOrdinalBarchart('#distribution', #{ @chart.to_json })
+/ #distribution
+/ :coffeescript
+/   drawOrdinalBarchart('#distribution', #{ @chart.to_json })
 
-%hr
+/ %hr
 
 %h3 number of matches with a team rank delta >= x
 
@@ -34,19 +34,19 @@
 
 %hr
 
-%h3 weighted benefit conferred per delta
+/ %h3 weighted benefit conferred per delta
 
-#margin2
-:coffeescript
-  drawOrdinalBarchart('#margin2', #{ @chart3.to_json })
-
-
+/ #margin2
+/ :coffeescript
+/   drawOrdinalBarchart('#margin2', #{ @chart3.to_json })
 
 
-%table.table
-  %tr
-    %th n
-    %td= @data.map(&:count).reduce(:+)
 
 
-%pre~ @chart.inspect
+/ %table.table
+/   %tr
+/     %th n
+/     %td= @data.map(&:count).reduce(:+)
+
+
+/ %pre~ @chart.inspect

@@ -1,3 +1,7 @@
+.modal.fade#modal{role: :dialog}
+  .modal-dialog
+    .modal-content
+
 %h1 Determining factors for an a priori, probablistic prediction in League of Legends
 
 %blockquote.bs-callout.bs-callout-warning
@@ -44,7 +48,7 @@
 %p
   The classic problem in this space thus:
   %i 'There's a 70% chance of rain on Thursday.'
-  If it rains, you say it was a decent prediction, but you are left high and dry by Friday, you can still say you'd be right, since it won't rain 3 times out 10.  The challenges to this kind of problem include
+  If it rains, you say it was a decent prediction, but you are left high and dry by Friday, you can still say you are right, since it won't rain 3 times out 10.  The challenges to this kind of problem include
   %ul
     %li the forecast is itself a expressed as chance (a probability of the event occuring),
     %li you only have one observation, and the outcome is mutually exlcusive (either it rained or it did not), and
@@ -63,19 +67,23 @@
   = image_tag 'brier_score.png'
 
 :kramdown
-  In League of Legends, we have one additional challenge in this area: the fact that nominal outcome of a match is 50-50.  This also means that any probabilistic predictor must be better calibrated than a coin flip (e.g. a Brier Score of 0.25) to be declared a meaningful tool.
+  In League of Legends, we have one additional challenge in this area: the fact that nominal outcome of a match is 50-50.  This also means that any probabilistic predictor must be better calibrated than a coin flip (e.g. a Brier Score lower than 0.25) to be declared a meaningful tool.
 
 
 %h3 A priori verus a posteriori analysis
 
 :kramdown
-  Although several websites (such as [League of Graphs](http://www.leagueofgraphs.com/rankings/win-stats)) have shown that the probablity of winning the game can be well-correlated to key events during the game, there is scant research on whether the outcome can be predicted accurately [a priori](http://www.merriam-webster.com/dictionary/a%20priori) - i.e. predicted before the match starts.
+  Although several websites (such as [League of Graphs](http://www.leagueofgraphs.com/rankings/win-stats)) have shown that the probablity of winning can be well-correlated to key events during the game, there is scant research on whether the outcome can be predicted accurately [a priori](http://www.merriam-webster.com/dictionary/a%20priori) - i.e. predicted before the match starts.
+
+  We largely ignore the timeline events in the match payload, because we mostly concerned with who the players are, which champions they pick, and what the final outcome was. Our goal therefore is to find a way to estimate a team's chances of winning based soley on their inputs, not their gameplay or execution.  This seems particuarlly relevant in URF mode, since resources are abudent and either skill nor strategy are obviious factors in URF gameplay.
+
+  For example in tournament play, a well-timed skill shot can change the course of a battle, but in URF mode, a missed skill shot can just be followed by several more!  Futhermore the laning phase is easier and likely to be less critical for the aquisition of gold and early advantage.
 
 %h3 Approach
 
 %ol
   %li Download as much URF mode match data as possible.
-  %li Analyze the factors that contribute to winning a LoL URF mode matches.
+  %li Analyze the factors that contribute to winning URF mode matches.
   %li Create estimators based on the strongest factors.
   %li Implement a deterministic simulations to provide probabilistic outcomes.
 
@@ -84,7 +92,7 @@
 %h3 Champion selection
 
 %p
-  With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  Within 100,000 downloaded URF mode matches, we only saw a XXXX team choices, and YYY team match ups - a tiny fraction of the total possiblities.  Although it is apparent from gameplay that teams exhibit synergies or disonnance based on composition, the first analysis will have to focus on individual champions rather than the team collectively.
+  With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  Within 100,000 downloaded URF mode matches, we only saw only a tiny fraction of the total possiblities.  Although it is apparent from gameplay that teams exhibit synergies or disonnance based on composition, the first analysis will have to focus on individual champions rather than the team collectively.
 
 :kramdown
   Since URF mode is [blind-pick]('http://leagueoflegends.wikia.com/wiki/Normal_game'), there is a fair chance that a single champion will appear on both teams.  When this occurs, we have three options when calculating the win rate:
@@ -110,7 +118,9 @@
       For most analyses, we choose this option since the mirror match provides no meaningful information as which of the two would win when comparing team compositions on an individual basis.  This metric still retains the property that the sum of all probabilites is 1.
 
 %p
-  Using the 3rd method of counting, champion win rates showed a strong normal distribution.  All but 12 champions had a win rate between 45 and 55%.  The average win rate was only 49%.  However, only 53 out of 124 champions (42.7%) had a winning record.
+  Using the 3rd method of counting, champion win rates showed a
+  %a{ href: '/urf/champions/distribution', data: { toggle: :modal, target: '#modal' } } strong normal distribution
+  \.  All but 12 champions had a win rate between 45 and 55%.  The average win rate was only 49%.  However, only 53 out of 124 champions (42.7%) had a winning record.
 
 %p
   The first attempt was to build an estimator that relies entirely on character win rates to compute a team's chance at victory.  Despite several attempts, none had resounding success.
@@ -156,17 +166,35 @@
 :kramdown
   Given the wide range of players in League of Legends, the next varaible to consider whether player experience contributes to victory.  There are two obvious challenges in this analysis.
 
-  First, the anonymous data for URF mode matches did not include the player's identity, so additional details about the player were unavailable.  An attribute such as total matches or victories would be a strong indicator of experience and/or dedication to League, but that statistic is not available here.  However, the 'highest rank acheived' in this Season of play was included in the payload, which will have to stand as proxy for the skill of the player.
+%p
+  First, the anonymous data for URF mode matches did not include the player's identity, so additional details about the player were unavailable.  An attribute such as total matches or victories would be a strong indicator of experience and/or dedication to League, but that statistic is not available here.  We only have two relevant attributes
+  %a{ href: '/urf/teams/level', data: { toggle: :modal, target: '#modal' } } player level
+  and
+  the 'highest rank acheived' in this Season of play was included in the payload, which will have to stand as proxy for the skill of the player.
 
+%p
   Second, Riot already uses an algorithm to match teams with similarly skilled players, which makes analysing disparity more difficult.
 
-  Even with these limitations, several results were gleamed from the data.  By assigning 'points' to each of the 8 ranks (_Unranked, Bronze, Silver, Gold, etc_), we can calculate the weight of each team.  Probability of greater differences between team strength decreases logrithmically.  One fifth of matches were evenly matched, and over 70% had a difference of less than 4 points.  This demonstrates taht the matching system is quite fair.
+%p
+  Even with these limitations, several results were gleamed from the data.  By assigning 'points' to each of the 8 ranks (
+  %i Unranked, Bronze, Silver, Gold, etc
+  ), we can calculate the weight of each team.  Probability of greater differences between team strength
+  %a{ href: '/urf/teams/rank/delta', data: { toggle: :modal, target: '#modal' } } decreases logrithmically
+  \. One fifth of matches were evenly matched, and over 70% had a difference of less than 4 points.  This demonstrates taht the matching system is quite fair.
 
-  However, when we graph percent of upsets versus team rank, we see a pattern.  For each point of rank disparity, the stronger team had 1% better chance to win. Although the number of disparate team matches drops off quickly, the pattern holds.  Even in the long tail, we have 13 matches out of 110359 with a disparity above 14 (the equilivant to an all-_Gold_  team versus an all-_Unranked_ team), and the stronger teams had extremely high win rates over their weaker opponents.
+%p
+  However, when we graph percent of upsets versus team rank, we see a pattern.  For each point of rank disparity, the stronger team had a
+  %a{ href: '/urf/teams/rank/upsets', data: { toggle: :modal, target: '#modal' } } +1% better chance
+  to win. Although the number of disparate team matches drops off quickly, the pattern holds.  Even in the long tail, we have 13 matches out of 110359 with a disparity above 14 (the equilivant to an all-_Gold_  team versus an all-_Unranked_ team), and the stronger teams had extremely high win rates over their weaker opponents.
 
   Is it possible that higher ranked players simply chose better (or more winning) characters?  A simple linear regression of player rank versus win rates shows a slope of -0.00038 - essentially, zero.  We conclude that in general, the benefits of rank disparity between teams in a match are not connected to champion selection.
 
 %h3 (Not all that glitters is) Gold
+
+%blockquote.bs-callout
+  If you're 50 gold short for an item, kill the enemy nexus.
+  %footer load screen tooltip, League of Legends.
+
 
 :kramdown
   The League community recognizes that gold is a strong indicator of which team is ahead during a match.  This is jusfitifed by the virtious cycle whereby gold buys better items, which improves performance against creeps and other players, both of which provide gold when killed.  However, gold in URF mode is relatively easy to aquire and champions can achieve full builds in a fraction of the time required in a Normal game.
@@ -194,7 +222,11 @@
       %td 51.0%
 
 %p
-  The answer is no, but there are a few deficits in this analysis. Excess gold beyond a character's final build is not likely to be strongly indicitive of a winning position.
+  The answer is no, but sadly we find our best calibrated estimator yet - the team with the most gold is more closely calibrated to determining the winner.
+
+%p
+  There are a few deficits in this analysis. Excess gold beyond a character's final build is not likely to be strongly indicitive of a winning position.  There is no understanding as to where the gold came from (creeps, objectives, kills), which have a strong affect on the balance (and thus victory) in the game.  Lastly, the winning team will usually aquire gold in the final push into the enemy base, which means the winning team already gets a bias in the final gold results.
+
 
 %h2 Conclusions
 
@@ -235,9 +267,11 @@ The git repository contains three branches which are not connected to the same t
   %code /bin/analysis
 
 :kramdown
-  At one point there was some consideration of making the rails branch an interactive application for end-use and deploying the project ala <carry.gg>
+  At one point there was some consideration of making the rails branch an interactive application for end-use and deploying the project ala <carry.gg>, but we could not collect enough data and build a model fast enough (or fast enough model) to provide real-time feedback on games just starting.
 
-%h4 gh-pages
+  The web framework is [Twitter Bootstrap 3](http://getbootstrap.com/), assets (namely [d3.js](http://d3js.org/)) are marshaled via bower.  You'll also need the aforementioned mongodb to run the app.
+
+%h4 Branch: gh-pages
 :kramdown
   Although the underlying tool is a rails app, all pages are static once the data is generated, so the resultant pages were collected and uploaded as static resources.  This branch should have been created from a static site generator such as (middleman)[https://middlemanapp.com/], but since the rails app already had all the necessary resources, scraping its output was easier than creating yet a third project.
 

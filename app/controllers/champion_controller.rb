@@ -1,5 +1,5 @@
 class ChampionController < ApplicationController
-  WIN_LOSS_CLASS = Urf::ChampionWinLoss
+  WIN_LOSS_CLASS = Urf::ChampionWinLossUnique
 
   def index
     @data = Champion.all
