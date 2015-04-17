@@ -1,86 +1,295 @@
-%h1 Predicting A Priori Match Outcomes via Determistic and Stochastic Models
+%h1 Determining factors for an a priori, probablistic prediction in League of Legends
 
-%blockquote
+%blockquote.bs-callout.bs-callout-warning
   Whoa there Charles Dickens, I didn't come here to read a novel!
 
-%p 
-  This is an academic treatise, and there is a good chance you may learn something in the process.  But if I cannot sway you to stay the course, you can just skip to the
+%p
+  Although casual in tone, this is an academic treatise and there is a good chance you may learn something in the process.  But if I cannot sway you to stay the course, you can just skip to the
   = link_to 'TL;DR Summary', '#tldr'
 
 %h3 Purpose
 
-%blockquote
+%blockquote.bs-callout
   I would have the studies elective. Scholarship is to be created not by compulsion, but by awakening a pure interest in knowledge. The wise instructor accomplishes this by opening to his pupils precisely the attractions the study has for himself.
   %footer Ralph Waldo Emerson
 
-%p This document and software serves several concurrent purposes
+%p
+  This document and software serves several concurrent purposes,
+  %ul
+    %li To learn and teach about probabalistic analysis and simluation,
+    %li To engage the developer community and meta surrounding League of Legends,
+    %li
+      To compete in the
+      = link_to 'Riot API Challenge', 'https://developer.riotgames.com/api-challenge'
 
 %h3 Background
 
 :kramdown
-  _League of Legends_ is a popular online multiplayer game developed my Riot Games.  In normal play, the game pits two teams of 5 players against each other.  Each player selects one of 124 possible characters (called _champions_), each of which has various strengths and weaknesses.  Each champion has four abilities (such as a special attack or a healing spell)that can be activated by the player.  Each ability has a limit on how long the player must wait before using that ability again, called a _cooldown_.  The requist time can range from a few seconds to several minutes.
+  [_League of Legends_](http://na.leagueoflegends.com/) is a popular online multiplayer game developed by [Riot Games](http://www.riotgames.com/).  In normal play, the game pits two teams of 5 players against each other.  Each player selects one of 124 possible characters (called _champions_), each of which has various strengths and weaknesses.  Each champion has four _abilities_ (such as a special attack or a healing spell) that can be activated by the player.  Each ability has a limit on how long the player must wait before using that ability again, called a _cooldown_.  The requist time can range from a seconds to several minutes.
 
-  As both an April Fool's joke and a way to keep the game fun and interesting, Riot re-released the _Ultra Rapid Fire (URF) Mode_, which is best described by gaming site Kotaku (http://kotaku.com/league-of-legends-should-keep-its-ridiculous-april-fool-1695410106):
+  As both an April Fool's joke and a way to keep the game fun and interesting, Riot re-released the [_Ultra Rapid Fire (URF) Mode_](http://na.leagueoflegends.com/en/news/game-updates/patch/urf-rising), best described by gaming website Kotaku:
 
 %blockquote
-  The attack speed, movement speed, critical strike damage, and the rate at which players' characters in the game farmed gold were all bumped up. The cooldown times and mana costs for their special abilities were also decreased to such an extent that players could spend an entire game spamming their champions' most powerful attacks against one another every few seconds.
+  %p
+    The attack speed, movement speed, critical strike damage, and the rate at which players' characters in the game farmed gold were all bumped up. The cooldown times and mana costs for their special abilities were also decreased to such an extent that players could spend an entire game spamming their champions' most powerful attacks against one another every few seconds.
+  %p
+    URF took everything that was normally meant to be carefully managed in League and handed it to its players in abundance. [Riot] threw caution to the wind in turn. Champions were suddenly able to wail on each other nonstop for the length of a whole game.
+  %footer
+    = link_to 'Kotaku', 'http://kotaku.com/league-of-legends-should-keep-its-ridiculous-april-fool-1695410106'
+    (2 Apr 2015)
 
-  URF took everything that was normally meant to be carefully managed in League and handed it to its players in abundance. [Riot] threw caution to the wind in turn. Champions were suddenly able to wail on each other nonstop for the length of a whole game.
 
+%h3 Proabalistic forecasts for mutually exclusive outcomes
+
+%p
+  The classic problem in this space thus:
+  %i 'There's a 70% chance of rain on Thursday.'
+  If it rains, you say it was a decent prediction, but you are left high and dry by Friday, you can still say you'd be right, since it won't rain 3 times out 10.  The challenges to this kind of problem include
+  %ul
+    %li the forecast is itself a expressed as chance (a probability of the event occuring),
+    %li you only have one observation, and the outcome is mutually exlcusive (either it rained or it did not), and
+    %li the exact conditions may not appear again to test the prediction multiple times over.
+
+:kramdown
+  We run into this same situation in League of Legends.  Since there are two teams in each match (and no ties), there is a boolean outcome (either _Red_ or _Blue_ team must win), and we are highly unlikely to ever see a second match with the _exact_ same set of players, skills and champions in the same positions.
+
+%h4 Brier score
+
+:kramdown
+  The [Brier Score](http://en.wikipedia.org/wiki/Brier_score) is a method to measure the accuracy of predictions expresses probablities when their outcomes are mutually excluse and discrete. You can calucate this by summing the square of the differences between the predicted probablity and the observed outcome (as 0 or 1), divided by the number of observations:
+
+%p.text-center
+  %small.pull-right Attribution: Wikipedia
+  = image_tag 'brier_score.png'
+
+:kramdown
+  In League of Legends, we have one additional challenge in this area: the fact that nominal outcome of a match is 50-50.  This also means that any probabilistic predictor must be better calibrated than a coin flip (e.g. a Brier Score of 0.25) to be declared a meaningful tool.
+
+
+%h3 A priori verus a posteriori analysis
+
+:kramdown
+  Although several websites (such as [League of Graphs](http://www.leagueofgraphs.com/rankings/win-stats)) have shown that the probablity of winning the game can be well-correlated to key events during the game, there is scant research on whether the outcome can be predicted accurately [a priori](http://www.merriam-webster.com/dictionary/a%20priori) - i.e. predicted before the match starts.
 
 %h3 Approach
 
 %ol
-  %li Analyze the factors that contribute to winning a LoL URF mode match.
-  %li Create an estimator
-  %li TODO
+  %li Download as much URF mode match data as possible.
+  %li Analyze the factors that contribute to winning a LoL URF mode matches.
+  %li Create estimators based on the strongest factors.
+  %li Implement a deterministic simulations to provide probabilistic outcomes.
 
-%h2 Analysis of Winning Factors
+%h2 Analysis of winning factors
 
-%h3 Champion Selection
+%h3 Champion selection
 
-%p 
-  With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  Over the 100,000 downloaded URF mode matches, we only saw a XXXX team choices, and YYY team match ups - a tiny fraction of the total possiblities.  Although it is apparent from gameplay that teams exhibit synergies or disonnance based on composition, the analysis will have to focus on individual champions rather than the team as a whole in order to have enough data to create an estimator.
-
-
-%a{name: '#tldr'}
-%h3 TL;DR Summary
-
-%h6 Who were the best/worst champions in URF mode?
-%p 
-  The champions with the best win record include Sona (55%), Jax (54%), and TODO 
-  ;Thresh clocks in with a dismal 40% record. 
-
-%h6 Were the games 'won or lost at champion select'?
 %p
-  %b Somewhat.
-  Although the champion win rates had a nice bell-curve shape, only XX (YY%) of the 124 champions had overall winning records.
-  From just the champion selection alone, we can successfully predict the outcome of a match 58% of the time.
+  With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  Within 100,000 downloaded URF mode matches, we only saw a XXXX team choices, and YYY team match ups - a tiny fraction of the total possiblities.  Although it is apparent from gameplay that teams exhibit synergies or disonnance based on composition, the first analysis will have to focus on individual champions rather than the team collectively.
 
-%h6 Did higher-ranked players win more?
+:kramdown
+  Since URF mode is [blind-pick]('http://leagueoflegends.wikia.com/wiki/Normal_game'), there is a fair chance that a single champion will appear on both teams.  When this occurs, we have three options when calculating the win rate:
+
+%ol
+  %li
+    %i Wins divided by wins plus losses.
+    %p
+      This metric best reports the champion's performance without regard to matches.  The metric can be used as a probability since
+      = succeed(',') do
+        %code win% + loss% = 1
+
+    %p However, this metric understates the effectivness when comparing two champions because the denominator 'double counts' a single match when the champion appears on both teams.  This metric
+  %li
+    %i Wins divided by number of matches where the champion is present at least once.
+    %p
+      This causes
+      %code 1 <= wins% + loss% <= 2
+      and creates 'noisy' and quixotical results such as in the case of a perfect mirror match: each champion would have both a 100% win and 100% loss rate.
+  %li
+    %i Wins divided by wins plus losses, but ignore any duplicate champions in a single match.
+    %p
+      For most analyses, we choose this option since the mirror match provides no meaningful information as which of the two would win when comparing team compositions on an individual basis.  This metric still retains the property that the sum of all probabilites is 1.
+
+%p
+  Using the 3rd method of counting, champion win rates showed a strong normal distribution.  All but 12 champions had a win rate between 45 and 55%.  The average win rate was only 49%.  However, only 53 out of 124 champions (42.7%) had a winning record.
+
+%p
+  The first attempt was to build an estimator that relies entirely on character win rates to compute a team's chance at victory.  Despite several attempts, none had resounding success.
+
+%table.table
+  %thead
+    %tr
+      %th Algoritm
+      %th Brier Score
+      %th Raw Accuracy
+  %tbody
+    %tr
+      %td
+        Linear (cumulative)
+        %code 01_linear
+      %td 0.248
+      %td 57.8%
+    %tr
+      %td
+        Linear (multiplicative)
+        %code 01_linear_mult
+      %td 0.241
+      %td 57.9%
+    %tr
+      %td
+        Standard deviation (cumulative)
+        %code 05_standard_deviation_mult
+      %td 0.244
+      %td 57.9%
+    %tr
+      %td
+        Standard deviation (multiplicative)
+        %code 05_standard_deviation
+      %td 0.239
+      %td 57.7%
+
+
+%p
+  Given that a coin-flip would provide an accuracy of 50% and Brier score of 0.25, none of these algorithms are particuarlly well calibrated.
+
+%h3 Player experience
+
+:kramdown
+  Given the wide range of players in League of Legends, the next varaible to consider whether player experience contributes to victory.  There are two obvious challenges in this analysis.
+
+  First, the anonymous data for URF mode matches did not include the player's identity, so additional details about the player were unavailable.  An attribute such as total matches or victories would be a strong indicator of experience and/or dedication to League, but that statistic is not available here.  However, the 'highest rank acheived' in this Season of play was included in the payload, which will have to stand as proxy for the skill of the player.
+
+  Second, Riot already uses an algorithm to match teams with similarly skilled players, which makes analysing disparity more difficult.
+
+  Even with these limitations, several results were gleamed from the data.  By assigning 'points' to each of the 8 ranks (_Unranked, Bronze, Silver, Gold, etc_), we can calculate the weight of each team.  Probability of greater differences between team strength decreases logrithmically.  One fifth of matches were evenly matched, and over 70% had a difference of less than 4 points.  This demonstrates taht the matching system is quite fair.
+
+  However, when we graph percent of upsets versus team rank, we see a pattern.  For each point of rank disparity, the stronger team had 1% better chance to win. Although the number of disparate team matches drops off quickly, the pattern holds.  Even in the long tail, we have 13 matches out of 110359 with a disparity above 14 (the equilivant to an all-_Gold_  team versus an all-_Unranked_ team), and the stronger teams had extremely high win rates over their weaker opponents.
+
+  Is it possible that higher ranked players simply chose better (or more winning) characters?  A simple linear regression of player rank versus win rates shows a slope of -0.00038 - essentially, zero.  We conclude that in general, the benefits of rank disparity between teams in a match are not connected to champion selection.
+
+%h3 (Not all that glitters is) Gold
+
+:kramdown
+  The League community recognizes that gold is a strong indicator of which team is ahead during a match.  This is jusfitifed by the virtious cycle whereby gold buys better items, which improves performance against creeps and other players, both of which provide gold when killed.  However, gold in URF mode is relatively easy to aquire and champions can achieve full builds in a fraction of the time required in a Normal game.
+
+  Even so, does a gold advantage deterime the winner?
+
+%table.table
+  %thead
+    %tr
+      %th Algorithm
+      %th Brier Score
+      %th Raw Accuracy
+  %tbody
+    %tr
+      %td
+        Relative Gold Advantage
+        %code 06_gold_predictor
+      %td 0.230
+      %td 51.0%
+    %tr
+      %td
+        Abolute (Boolean) Gold Advantage
+        %code 06_gold_predictor
+      %td 0.206
+      %td 51.0%
+
+%p
+  The answer is no, but there are a few deficits in this analysis. Excess gold beyond a character's final build is not likely to be strongly indicitive of a winning position.
+
+%h2 Conclusions
+
+%blockquote.bs-callout
+  Failure is always an option.
+  %footer Adam Savage
+
+:kramdown
+  None of the factors explored provided enough information to build a coherent model for predicing the a priori winner.  We were close to matching some early game a posteriori predictions, such as First Blood, but additional research will be required to find a factor or combination of factors that can provide a better esitmator.
+
+  It could also be the case that the Brier Score is a poor choice for scoring the prediction in League of Legends.  There is [active debate](http://www.dailykos.com/story/2012/11/12/1160597/-Election-forecasting-and-the-problem-with-the-Brier-Score) that the Brier score favors "safe" prediction and inherently discourages prediction outside of the a widely expected value - of which 50-50% is a fanatastic prediction for two evenly-matched teams in League of Legends.
+
+  Furthermore, a (log likihood)[http://en.wikipedia.org/wiki/Likelihood_function#Log-likelihood] scoring method may be superior when the outcome is heavily favored one direction.  Given the game's positive-feedback cycle and ancedotal correlations between [game events and outcome](http://www.leagueofgraphs.com/rankings/win-stats#firstblood), we may need to explore other scoring mechanisms.
+
+%h2 A tour of the code
+
+The git repository contains three branches which are not connected to the same tree.
+
+%h4 Branch: dataminer
+:kramdown
+  Dataminer's sole purpose was to extract as much data from the [Riot API endpoints](https://developer.riotgames.com/docs/getting-started) as possible.  Developer tokens are limited to 10 requests in 10 second, or 500 requests in 10 minutes.  The dataminer throttles requests to the slower of the two limits - one request every 1.25 seconds.
+
+%p
+  The main loop is straightforward: query the new
+  %code api-challenge
+  endpoint for URF mode matches, then call the
+  %code match
+  api iteratively for any matches not yet downloaded.
+
+%h4 Branch: master
+:kramdown
+  The master branch contains a rails application used in processing data.  We use [mongoid](http://mongoid.org/en/mongoid/index.html) to load data into [mongodb](https://www.mongodb.org/), then process match data into meaningful collections.  Most of the map-reduce work is done by hand rather than aggregation pipeline in order to facilitate debugging and ease of change.
+
+%p
+  Scripts in
+  %code /bin/ops
+  load data or create subsequent collection that are needed for later processing.  Analysis scripts that test outcomes are located in
+  %code /bin/analysis
+
+:kramdown
+  At one point there was some consideration of making the rails branch an interactive application for end-use and deploying the project ala <carry.gg>
+
+%h4 gh-pages
+:kramdown
+  Although the underlying tool is a rails app, all pages are static once the data is generated, so the resultant pages were collected and uploaded as static resources.  This branch should have been created from a static site generator such as (middleman)[https://middlemanapp.com/], but since the rails app already had all the necessary resources, scraping its output was easier than creating yet a third project.
+
+%hr
+%a{name: 'tldr'}
+%h3 TL;DR Summary
+%br
+
+%h4 Who were the best/worst champions in URF mode?
+:kramdown
+  **Sona** is a winning outlier, followed by **Jax** and **Wukong**. **Thresh** and **Bard** performed very poorly.
+
+  All but 12 (or 19) champions were within 45-55% - the percentages depend slightly on how you interpret data from mirror match ups.
+
+%br
+%h4 Were the games 'won or lost at champion select'?
+%p
+  %b No.
+:kramdown
+  Although the champion win rates had a nice bell-curve shape, only 53 (43%) of the 124 champions had overall winning records.  But most of the champions were close to the average of 49.4%.  From just the champion selection alone, we can successfully predict the winner of a match 58% of the time, but it's a poor guess.
+
+%br
+%h4 Did higher-ranked players win more?
 %p
   %b Yes and No.
-  Equally ranked teams were 50-50% across the board, regardless of the team's total experience.
-  However, for each rank of disparity over the opposition, the team increased their chances of winning by 1%.
+:kramdown
+  Equally ranked teams were even across the board, regardless of the team's total experience. However, for each rank of disparity over the opposition, the team increased their chances of winning by 1%.
 
-%h6 Does team rank disparity determine who wins?
+%br
+%h4 How often did we have a large disparity in team rank?
 %p
   %b Very rarely.
+:kramdown
   Riot's team matching system closely matches teams with similar experience/skill; the chance of a sizable difference in combined team rank decreases exponentially.
 
-%h6 Did better players pick better champions?
+%br
+%h4 Did better players pick better champions?
 %p
-  %b TODO
-  TODO
+  %b No.
+:kramdown
+  The correlation between rank and champion win rates was all but 0.  Ranked players chose  neither better nor worse than everyone else.
 
-%h6 Can you predict the outcome of a game before it starts?
+%br
+%h4 Can you predict the outcome of a game before it starts?
 %p
-  %b Mostly.
-  %p TODO
+  %b Not well.
+:kramdown
+  Some estimates approach 60%, but our calibration score for nearly every metric was not encouraging.  But it could be that the way we scored the probablities did not work thanks to the heavy snowball effect and two-team nature of matches.
 
-%h6 Can you predict Ranked games?
+%br
+%h4 Can you predict Ranked games?
 %p
   %b Not yet.
-  But the research suggests the model could be adapted to predict some aspects of Normal mode games.
-  
-  URF mode simplifies (or removes) many of the essential factors in Normal mode play.  You know, things like 'strategy' and 'managing resources'.
+:kramdown
+  But the research suggests the model could be adapted to predict some aspects of Normal mode games.  URF mode simplifies (or removes) many of the essential factors in Normal mode play - important things like *strategy* and *managing resources*. :)  This 'simplification' didn't actually help in modeling, but there is no reason to think that the more complex space of Normal mode would be much worse.

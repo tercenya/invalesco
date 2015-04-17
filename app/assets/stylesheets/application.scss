@@ -3,3 +3,19 @@ $icon-font-path: "bootstrap-sass/assets/fonts/bootstrap/";
 @import "bootstrap-sass/assets/stylesheets/bootstrap";
 
 @import 'barchart';
+@import 'colors';
+@import 'callouts';
+
+code {
+  color: $oil;
+  background-color: $smoke;
+}
+
+.table {
+  width: auto;
+}
+
+blockquote {
+  font-size: 14px;
+  footer { font-size: 100%; }
+}

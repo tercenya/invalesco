@@ -4,7 +4,7 @@ module ApplicationHelper
   def champion_icon(champion)
     key = champion_key(champion)
 
-    image_tag "http://ddragon.leagueoflegends.com/cdn/#{DATA_DRAGON_VERSION}/img/champion/#{key}.png"
+    image_tag "http://ddragon.leagueoflegends.com/cdn/#{DATA_DRAGON_VERSION}/img/champion/#{key}.png", width: 100, height: 100
   end
 
   def champion_link(champion)

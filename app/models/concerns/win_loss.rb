@@ -5,7 +5,7 @@ module Concerns
     end
 
     def ratio
-      wins/total.to_f
+      self.wins / self.total.to_f
     end
 
     def champion

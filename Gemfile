@@ -22,10 +22,10 @@ else
   gem 'therubyracer'
 end
 
-# Views and frontend gems
-gem 'haml-rails'
+# Views and frontend gem
 gem 'kramdown'
-gem 'kramdown-haml'
+gem 'haml-rails'
+gem 'haml-kramdown'
 
 ## Utilities
 gem 'highline', require: false

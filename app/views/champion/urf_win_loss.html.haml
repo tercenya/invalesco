@@ -2,6 +2,7 @@
   %thead
     %tr
       %th Champion
+      %th Name
       %th Wins
       %th Losses
       %th Ratio
@@ -9,7 +10,9 @@
     - @data.each do |d|
       %tr
         %td= champion_icon d.champion
-        %td= d.champion.name
+        %td
+          = d.id
+          = d.champion.name
         %td= d.wins
         %td= d.losses
         %td= number_to_percentage d.ratio * 100
