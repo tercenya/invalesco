@@ -6,7 +6,7 @@
 <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 <title>Invalesco</title>
 <meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="ePbGMFQVfts50nOq+ASwFAjbx0DbqlabepiCLU2NhBwOsTpkoIaAn3XJLishEjczlnL4dn3M4GKQ4naVx2nHHA==" />
+<meta name="csrf-token" content="tONCbpO2BQS/RzZndImWVNylQKWzzxlv35JLAtmIimHCpL46ZyX7QPNca+atnxFzQgx/kxWpr5Y16L+6U2zJYQ==" />
 <link rel="stylesheet" media="all" href="/invalesco/assets/application-a724272c18a520092a02f4b1d7d7ef5682c5f581851a0b876ba72814676ec82e.css" />
 <link rel="shortcut icon" type="image/x-icon" href="/invalesco/images/favicon.ico" />
 <script src="/invalesco/assets/application-202a10f0301d8309ef11fb5ee871098e58cfa89ac177fb04028c2886989d7da7.js"></script>
@@ -80,12 +80,10 @@ If it rains, you say it was a decent prediction, but if you are left high and dr
 <img src="/invalesco/assets/brier_score-ab18f22ad1458e56d53f0788ae4e821eff7a78dcc1d3fa08726ae3f19ab8208d.png" alt="Brier score ab18f22ad1458e56d53f0788ae4e821eff7a78dcc1d3fa08726ae3f19ab8208d" />
 </p>
 <p>In League of Legends, we have one additional challenge in this area: the fact that nominal outcome of a match is 50-50.  This also means that any probabilistic predictor must be better calibrated than a coin flip (e.g. a Brier Score lower than 0.25) to be declared a meaningful tool.</p>
-<h3>A priori verus a posteriori analysis</h3>
+<h3>A priori versus a posteriori analysis</h3>
 <p>Although several websites (such as <a href="http://www.leagueofgraphs.com/rankings/win-stats">League of Graphs</a>) have shown that the probability of winning can be well-correlated to key events during the game, there is scant research on whether the outcome can be predicted accurately <a href="http://www.merriam-webster.com/dictionary/a%20priori">a priori</a> - i.e. predicted before the match starts.</p>
 
-<p>We largely ignore the timeline events in the match payload, because we mostly concerned with who the players are, which champions they pick, and what the final outcome was. Our goal therefore is to find a way to estimate a team's chances of winning based solely on their inputs, not their gameplay or execution.  This seems particularly relevant in URF mode, since resources are abundant and either skill nor strategy are obvious factors in URF gameplay.</p>
-
-<p>For example in tournament play, a well-timed skill shot can change the course of a battle, but in URF mode, a missed skill shot can just be followed by several more!  Furthermore the laning phase is easier and likely to be less critical for the acquisition of gold and early advantage.</p>
+<p>We largely ignore the timeline events in the match payload, because we mostly concerned with who the players are, which champions they pick, and what the final outcome was. Our goal therefore is to find a way to estimate a team's chances of winning based solely on their inputs, not their gameplay or execution.  This seems particularly relevant in URF mode, since resources are abundant while both skill nor strategy are reduced factors.  For example, in tournament play a well-timed skill shot can change the course of a battle.  But in URF mode, a missed skill shot can just be followed by several more!  Furthermore URF mode laning phases are easier and likely to be less critical to the acquisition of gold and creating an early advantage.</p>
 <h3>Approach</h3>
 <ol>
 <li>Download as much URF mode match data as possible.</li>
@@ -96,9 +94,9 @@ If it rains, you say it was a decent prediction, but if you are left high and dr
 <h2>Analysis of winning factors</h2>
 <h3>Champion selection</h3>
 <p>
-With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  Within 100,000 downloaded URF mode matches, we only saw only a tiny fraction of the total possibilities.  Although it is apparent from gameplay that teams exhibit synergies or dissonance based on composition, the first analysis will have to focus on individual champions rather than the team collectively.
+With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  In the 110,000 downloaded URF mode matches, we only saw only a tiny fraction of the total possibilities.  Although it is apparent from gameplay that teams exhibit synergies or dissonance based on composition, the first analysis will have to focus on individual champions rather than the team collectively.
 </p>
-<p>Since URF mode is <a href="http://leagueoflegends.wikia.com/wiki/Normal_game">blind-pick</a>, there is a fair chance that a single champion will appear on both teams.  When this occurs, we have three options when calculating the win rate:</p>
+<p>Since URF mode is <a href="http://leagueoflegends.wikia.com/wiki/Normal_game">blind-pick</a>, there is a fair chance that a single champion will appear on both teams.  When this occurs we have three options when calculating the win rate:</p>
 <ol>
 <li>
 <i>Wins divided by wins plus losses.</i>
@@ -117,16 +115,16 @@ and creates 'noisy' and quixotical results such as in the case of a perfect mirr
 </p>
 </li>
 <li>
-<i>Wins divided by wins plus losses, but ignore any duplicate champions in a single match.</i>
+<i>Wins divided by wins plus losses but ignore any duplicate champions in a single match.</i>
 <p>
 For most analyses, we choose this option since the mirror match provides no meaningful information as which of the two would win when comparing team compositions on an individual basis.  This metric still retains the property that the sum of all probabilities is 1.
 </p>
 </li>
 </ol>
 <p>
-Using the 3rd method of counting, champion win rates showed a
+Using the 3rd method of counting champion win rates showed a
 <a data-target='#modal' data-toggle='modal' href='/invalesco/urf/champions/distribution.html'>strong normal distribution</a>
-.  All but 12 champions had a win rate between 45 and 55%.  The average win rate was only 49%.  However, only 53 out of 124 champions (42.7%) had a winning record.
+.  All but 12 champions had a win rate between 45 and 55%.  The average win rate was only 49%.  Only 53 out of 124 champions (42.7%) had a winning record.
 </p>
 <p>
 The first attempt was to build an estimator that relies entirely on character win rates to compute a team's chance at victory.  Despite several attempts, none had resounding success.
@@ -180,7 +178,7 @@ Given that a coin-flip would provide an accuracy of 50% and Brier score of 0.25,
 <h3>Player experience</h3>
 <p>Given the wide range of players in League of Legends, the next variable to consider whether player experience contributes to victory.  There are two obvious challenges in this analysis.</p>
 <p>
-First, the anonymous data for URF mode matches did not include the player's identity, so additional details about the player were unavailable.  An attribute such as total matches or victories would be a strong indicator of experience and/or dedication to the game, but that statistic is not available to us.  We only have two relevant attributes,
+First, the anonymous data for URF mode matches did not include the player's identity, so additional details about the player were unavailable.  An attribute such as total matches or victories would be a strong indicator of experience and/or dedication to the game but that statistic is not available to us.  We only have two relevant attributes,
 <a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/level.html'>player level</a>
 and
 the 'highest rank achieved' in this Season of play was included in the payload, which will have to stand as proxy for the skill of the player.
@@ -189,14 +187,14 @@ the 'highest rank achieved' in this Season of play was included in the payload, 
 Second, Riot already uses an algorithm to match teams with similarly skilled players, which makes analyzing disparity more difficult.
 </p>
 <p>
-Even with these limitations, the data show several interesting results.  By assigning 'points' to each of the 8 ranks (
+Even with these limitations the data show several interesting results.  By assigning 'points' to each of the 8 ranks (
 <i>Unranked, Bronze, Silver, Gold, etc</i>
 ), we can calculate the weight of each team.  Probability of greater differences between team strength
 <a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/rank/delta.html'>decreases logrithmically</a>
 . One fifth of matches were evenly in points, and over 70% had a difference of less than 4 points.  This demonstrates that the matching system is quite fair.
 </p>
 <p>
-When we graph percent of upsets versus team rank, we see a pattern.  For each point of rank disparity, the stronger team gained a
+When we graph percent of upsets versus team rank, we see a pattern.  For each point of rank disparity the stronger team gained a
 <a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/rank/upsets.html'>+1% improved chance</a>
 to win. Although the number of disparate team matches drops off quickly, the pattern holds.  Even in the long tail, we have 13 matches out of 110359 with a disparity above 14 (the equivalent of an all-Gold team versus an all-Unranked team), and the stronger teams had extremely high win rates over their weaker opponents.
 Is it possible that higher ranked players simply chose better (or more winning) characters?  A simple linear regression of player rank versus win rates shows a slope of -0.00038 - essentially, zero.  We conclude that in general, the benefits of rank disparity between teams in a match are not connected to champion selection.
@@ -237,7 +235,7 @@ Abolute (Boolean) Gold Advantage
 </tbody>
 </table>
 <p>
-The answer is no, but sadly we find our best calibrated estimator yet - the team with the most gold is more closely calibrated to determining the winner.
+The answer is no, but sadly we find our best calibrated estimator yet - the team with the most gold is more closely calibrated to determining the winner.  This is likely due to the near 50% odds that the estimator provides.
 </p>
 <p>
 There are a few deficits in this analysis. Excess gold beyond a character's final build is not likely to be strongly indicative of a winning position.  There is no understanding as to where the gold came from (creeps, objectives, kills), which have a strong affect on the balance (and thus victory) in the game.  Lastly, the winning team will usually acquire gold in the final push into the enemy base, which means the winning team already gets a bias in the final gold results.
@@ -251,11 +249,11 @@ Failure is always an option.
 
 <p>It could also be the case that the Brier Score is a poor choice for scoring the prediction in League of Legends.  There is <a href="http://www.dailykos.com/story/2012/11/12/1160597/-Election-forecasting-and-the-problem-with-the-Brier-Score">active debate</a> that the Brier score favors "safe" prediction and inherently discourages prediction outside of the a widely expected value - of which 50-50% is a fantastic prediction for two evenly-matched teams in League of Legends.</p>
 
-<p>Furthermore, a <a href="http://en.wikipedia.org/wiki/Likelihood_function">log likelihood</a> scoring method may be superior when the outcome is heavily favored one direction.  Given the game's positive-feedback cycle and anecdotal correlations between <a href="http://www.leagueofgraphs.com/rankings/win-stats#firstblood">game events and outcome</a>, we may need to explore other scoring mechanisms.</p>
+<p>Furthermore a <a href="http://en.wikipedia.org/wiki/Likelihood_function">log likelihood</a> scoring method may be superior when the outcome is heavily favored one direction.  Given the game's positive-feedback cycle and anecdotal correlations between <a href="http://www.leagueofgraphs.com/rankings/win-stats#firstblood">game events and outcome</a>, we may need to explore other scoring mechanisms.</p>
 <h2>A tour of the code</h2>
 <p>The <a href="https://github.com/tercenya/invalesco">github repository</a> contains three unique branches.</p>
 <h4>Branch: dataminer</h4>
-<p>Dataminer's sole purpose was to extract as much data from the <a href="https://developer.riotgames.com/docs/getting-started">Riot API endpoints</a> as possible.  Developer tokens are limited to 10 requests in 10 second, or 500 requests in 10 minutes.  The dataminer throttles requests to the slower of the two limits - one request every 1.25 seconds.</p>
+<p>Dataminer's sole purpose was to extract as much data from the <a href="https://developer.riotgames.com/docs/getting-started">Riot API endpoints</a> as possible.  Developer tokens are limited to 10 requests in 10 second or 500 requests in 10 minutes.  The dataminer throttles requests to the slower of the two limits - one request every 1.25 seconds.</p>
 <p>
 The main loop is straightforward: query the new
 <code>api-challenge</code>
@@ -271,7 +269,7 @@ Scripts in
 load data or create subsequent collection that are needed for later processing.  Analysis scripts that test outcomes are located in
 <code>/bin/analysis</code>
 </p>
-<p>At one point there was some consideration of making the rails branch an interactive application for end-use and deploying the project a la <carry.gg>, but we could not collect enough data and build a model fast enough (or fast enough model) to provide real-time feedback on games just starting.</carry.gg></p>
+<p>At one point there was some consideration of making the rails branch an interactive application for end-use and deploying the project a la <a href="carry.gg">carry.gg</a>, but we could not collect enough data and build a model fast enough (or fast enough model) to provide real-time feedback on games just starting.</p>
 
 <p>The web framework is <a href="http://getbootstrap.com/">Twitter Bootstrap 3</a>, assets (namely <a href="http://d3js.org/">d3.js</a>) are marshaled via bower.  You'll also need the aforementioned mongodb to run the app.</p>
 <h4>Branch: gh-pages</h4>
