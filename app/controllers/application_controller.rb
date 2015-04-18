@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   before_filter :app_name
   layout 'xjs'
 
+   after_filter do |c|
+     c.cache_page(nil, nil, false)
+   end
+
   def app_name
     @app_name = 'Invalesco'
   end
