@@ -38,5 +38,6 @@ module Invalesco
 
     # Mongoid.logger.level = Logger::DEBUG
     # Moped.logger.level = Logger::DEBUG
+    config.action_controller.relative_url_root = '/invalesco'
   end
 end
