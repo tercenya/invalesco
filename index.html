@@ -6,10 +6,10 @@
 <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 <title>Invalesco</title>
 <meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="eabAq86v25i6ah6tdxolBc+W5LhNSelSF4a59OqwYfGnPaHBHxAFDfZsBHyTxph2USCZSfveOdXeG6icdxCgyA==" />
-<link rel="stylesheet" media="all" href="/assets/application-0cddbc9b04e7730e52090b5dfaf4c739cee87a60688f463c7a5c8c06eb8cae48.css" />
-<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
-<script src="/assets/application-202a10f0301d8309ef11fb5ee871098e58cfa89ac177fb04028c2886989d7da7.js"></script>
+<meta name="csrf-token" content="xqfGjxJmLmgpePj1SCXdmmQBcJFpvwm62LEoKguSVJiNz16y1cy9wHCdppE+G246vYRNOEkdev97sw9C/JiCdg==" />
+<link rel="stylesheet" media="all" href="/invalesco/assets/application-a724272c18a520092a02f4b1d7d7ef5682c5f581851a0b876ba72814676ec82e.css" />
+<link rel="shortcut icon" type="image/x-icon" href="/invalesco/images/favicon.ico" />
+<script src="/invalesco/assets/application-202a10f0301d8309ef11fb5ee871098e58cfa89ac177fb04028c2886989d7da7.js"></script>
 
 </head>
 <body>
@@ -77,7 +77,7 @@ If it rains, you say it was a decent prediction, but if you are left high and dr
 <p>The <a href="http://en.wikipedia.org/wiki/Brier_score">Brier Score</a> is a method to measure the accuracy of predictions expresses probablities when their outcomes are mutually excluse and discrete. You can calucate this by summing the square of the differences between the predicted probablity and the observed outcome (as 0 or 1), divided by the number of observations:</p>
 <p class='text-center'>
 <small class='pull-right'>Attribution: Wikipedia</small>
-<img src="/assets/brier_score-ab18f22ad1458e56d53f0788ae4e821eff7a78dcc1d3fa08726ae3f19ab8208d.png" alt="Brier score ab18f22ad1458e56d53f0788ae4e821eff7a78dcc1d3fa08726ae3f19ab8208d" />
+<img src="/invalesco/assets/brier_score-ab18f22ad1458e56d53f0788ae4e821eff7a78dcc1d3fa08726ae3f19ab8208d.png" alt="Brier score ab18f22ad1458e56d53f0788ae4e821eff7a78dcc1d3fa08726ae3f19ab8208d" />
 </p>
 <p>In League of Legends, we have one additional challenge in this area: the fact that nominal outcome of a match is 50-50.  This also means that any probabilistic predictor must be better calibrated than a coin flip (e.g. a Brier Score lower than 0.25) to be declared a meaningful tool.</p>
 <h3>A priori verus a posteriori analysis</h3>
@@ -125,7 +125,7 @@ For most analyses, we choose this option since the mirror match provides no mean
 </ol>
 <p>
 Using the 3rd method of counting, champion win rates showed a
-<a data-target='#modal' data-toggle='modal' href='/urf/champions/distribution'>strong normal distribution</a>
+<a data-target='#modal' data-toggle='modal' href='/invalesco/urf/champions/distribution.html'>strong normal distribution</a>
 .  All but 12 champions had a win rate between 45 and 55%.  The average win rate was only 49%.  However, only 53 out of 124 champions (42.7%) had a winning record.
 </p>
 <p>
@@ -181,7 +181,7 @@ Given that a coin-flip would provide an accuracy of 50% and Brier score of 0.25,
 <p>Given the wide range of players in League of Legends, the next varaible to consider whether player experience contributes to victory.  There are two obvious challenges in this analysis.</p>
 <p>
 First, the anonymous data for URF mode matches did not include the player's identity, so additional details about the player were unavailable.  An attribute such as total matches or victories would be a strong indicator of experience and/or dedication to League, but that statistic is not available here.  We only have two relevant attributes
-<a data-target='#modal' data-toggle='modal' href='/urf/teams/level'>player level</a>
+<a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/level.html'>player level</a>
 and
 the 'highest rank acheived' in this Season of play was included in the payload, which will have to stand as proxy for the skill of the player.
 </p>
@@ -192,12 +192,12 @@ Second, Riot already uses an algorithm to match teams with similarly skilled pla
 Even with these limitations, several results were gleamed from the data.  By assigning 'points' to each of the 8 ranks (
 <i>Unranked, Bronze, Silver, Gold, etc</i>
 ), we can calculate the weight of each team.  Probability of greater differences between team strength
-<a data-target='#modal' data-toggle='modal' href='/urf/teams/rank/delta'>decreases logrithmically</a>
+<a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/rank/delta.html'>decreases logrithmically</a>
 . One fifth of matches were evenly matched, and over 70% had a difference of less than 4 points.  This demonstrates taht the matching system is quite fair.
 </p>
 <p>
 However, when we graph percent of upsets versus team rank, we see a pattern.  For each point of rank disparity, the stronger team had a
-<a data-target='#modal' data-toggle='modal' href='/urf/teams/rank/upsets'>+1% better chance</a>
+<a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/rank/upsets.html'>+1% better chance</a>
 to win. Although the number of disparate team matches drops off quickly, the pattern holds.  Even in the long tail, we have 13 matches out of 110359 with a disparity above 14 (the equilivant to an all-_Gold_  team versus an all-_Unranked_ team), and the stronger teams had extremely high win rates over their weaker opponents.
 Is it possible that higher ranked players simply chose better (or more winning) characters?  A simple linear regression of player rank versus win rates shows a slope of -0.00038 - essentially, zero.  We conclude that in general, the benefits of rank disparity between teams in a match are not connected to champion selection.
 </p>

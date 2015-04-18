@@ -6,7 +6,7 @@
 <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 <title>Invalesco</title>
 <meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="u784sJRJMBLWk+YRLpsfPa50u80EDkV2dOAW/ac5YDCvzzWP4WkaYA2sxTQJZQN8RhVzujckNknQ94glkrqx4g==" />
+<meta name="csrf-token" content="K/cKsnpBPJp4pk3LSjlzvxCwIxMIQz0CBdwNwzcQMcKxfeIzITf6o34xFrJ/1QycQwDCykmM5zAgtHxa0+YXSg==" />
 <link rel="stylesheet" media="all" href="/invalesco/assets/application-a724272c18a520092a02f4b1d7d7ef5682c5f581851a0b876ba72814676ec82e.css" />
 <link rel="shortcut icon" type="image/x-icon" href="/invalesco/images/favicon.ico" />
 <script src="/invalesco/assets/application-202a10f0301d8309ef11fb5ee871098e58cfa89ac177fb04028c2886989d7da7.js"></script>
@@ -20,52 +20,64 @@
 <br>
 <div class='button close' data-dismiss='modal'>&times; Close</div>
 </div>
-<h3>Team Rank Difference</h3>
+<h3>Team Rank Difference Distribution</h3>
 <!-- %table.table -->
 <!-- %thead -->
 <!-- %tr -->
-<!-- %th Levels -->
-<!-- %th # of Players -->
+<!-- %th Rank -->
+<!-- %th Wins -->
+<!-- %th Losses -->
 <!-- %tbody -->
 <!-- - @data.each do |e| -->
 <!-- %tr -->
 <!-- %td= e.id -->
-<!-- %td= e.count -->
+<!-- %td= e.wins -->
+<!-- %td= e.losses -->
 <!-- %hr -->
 <div id='distribution'></div>
 <script>
   (function() {
     drawOrdinalBarchart('#distribution', {
-      "0": 19459,
-      "1": 24397,
-      "2": 20985,
-      "3": 15860,
-      "4": 11271,
-      "5": 7396,
-      "6": 4571,
-      "7": 2866,
-      "8": 1667,
-      "9": 899,
-      "10": 486,
-      "11": 241,
-      "12": 121,
-      "13": 75,
-      "14": 27,
-      "15": 17,
-      "16": 12,
-      "17": 5,
-      "18": 2,
-      "19": 1,
-      "23": 1
+      "0": 21891,
+      "1": 9141,
+      "2": 15708,
+      "3": 15955,
+      "4": 18706,
+      "5": 17902,
+      "6": 18777,
+      "7": 17586,
+      "8": 16341,
+      "9": 14831,
+      "10": 12732,
+      "11": 10673,
+      "12": 8561,
+      "13": 6559,
+      "14": 4955,
+      "15": 3536,
+      "16": 2545,
+      "17": 1736,
+      "18": 1114,
+      "19": 640,
+      "20": 407,
+      "21": 216,
+      "22": 107,
+      "23": 51,
+      "24": 30,
+      "25": 11,
+      "26": 1,
+      "27": 5,
+      "28": 1
     });
   
   }).call(this);
 </script>
-<hr>
+<!-- #wins -->
+<!-- :coffeescript -->
+<!-- drawOrdinalBarchart('#wins', #{ @chart2.to_json }) -->
 <table class='table'>
 <tr>
 <th>n</th>
-<td>110359</td>
+<td>220718</td>
 </tr>
 </table>
 
