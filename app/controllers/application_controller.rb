@@ -17,4 +17,8 @@ class ApplicationController < ActionController::Base
   def sample_match
     render json: Match.first.to_json
   end
+
+  def default_url_options
+    { only_path: true, format: :html }
+  end
 end
