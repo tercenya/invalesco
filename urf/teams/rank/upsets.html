@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=Edge,chrome=1' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'>
+<title>Invalesco</title>
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="nNV7VVB5b3fSvC8DVgalepv/gOTlRdxQGGsRXb6tUyNCTho/gcax4p66NdKy2hgJBUn9FVPSDNfR9gA1Iw2SGg==" />
+<link rel="stylesheet" media="all" href="/assets/application-0cddbc9b04e7730e52090b5dfaf4c739cee87a60688f463c7a5c8c06eb8cae48.css" />
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+<script src="/assets/application-202a10f0301d8309ef11fb5ee871098e58cfa89ac177fb04028c2886989d7da7.js"></script>
+
+</head>
+<body>
+<div class='container'>
+<div class='row'>
+<div class='col-lg-12'>
+<div class='pull-right'>
+<br>
+<div class='button close' data-dismiss='modal'>&times; Close</div>
+</div>
+<!-- %h3 % of upsets with a team rank delta >= x -->
+<!-- %table.table -->
+<!-- %thead -->
+<!-- %tr -->
+<!-- %th Levels -->
+<!-- %th # of Players -->
+<!-- %tbody -->
+<!-- - @data.each do |e| -->
+<!-- %tr -->
+<!-- %td= e.id -->
+<!-- %td= e.count -->
+<!-- %hr -->
+<!-- #distribution -->
+<!-- :coffeescript -->
+<!-- drawOrdinalBarchart('#distribution', #{ @chart.to_json }) -->
+<!-- %hr -->
+<h3>number of matches with a team rank delta >= x</h3>
+<div id='totals'></div>
+<script>
+  (function() {
+    drawOrdinalBarchart('#totals', {
+      "23": 1,
+      "19": 1,
+      "18": 3,
+      "17": 8,
+      "16": 20,
+      "15": 37,
+      "14": 64,
+      "13": 139,
+      "12": 260,
+      "11": 501,
+      "10": 987,
+      "9": 1886,
+      "8": 3553,
+      "7": 6419,
+      "6": 10990,
+      "5": 18386,
+      "4": 29657,
+      "3": 45517,
+      "2": 66502,
+      "1": 90899,
+      "0": 110358
+    });
+  
+  }).call(this);
+</script>
+<hr>
+<h3>benefit conferred per delta (absolute)</h3>
+<div id='margin'></div>
+<script>
+  (function() {
+    drawOrdinalBarchart('#margin', {
+      "23": 50.0,
+      "19": 50.0,
+      "18": 50.0,
+      "17": 30.0,
+      "16": 0.0,
+      "15": -2.941176470588239,
+      "14": 20.370370370370374,
+      "13": 4.666666666666671,
+      "12": 8.67768595041322,
+      "11": 9.751037344398341,
+      "10": 9.053497942386826,
+      "9": 3.6151279199110107,
+      "8": 5.5488902219556095,
+      "7": 4.780181437543611,
+      "6": 5.020783198424851,
+      "5": 4.394267171444021,
+      "4": 3.4557714488510385,
+      "3": 3.051702395964689,
+      "2": 1.9037407672146784,
+      "1": 1.325982702791329,
+      "0": -1.1948198776915575
+    });
+  
+  }).call(this);
+</script>
+<hr>
+<!-- %h3 weighted benefit conferred per delta -->
+<!-- #margin2 -->
+<!-- :coffeescript -->
+<!-- drawOrdinalBarchart('#margin2', #{ @chart3.to_json }) -->
+<!-- %table.table -->
+<!-- %tr -->
+<!-- %th n -->
+<!-- %td= @data.map(&:count).reduce(:+) -->
+<!-- %pre~ @chart.inspect -->
+
+<div class='pull-right'>
+<div class='button close' data-dismiss='modal'>&times; Close</div>
+<br>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>
