@@ -6,7 +6,7 @@
 <meta content='width=device-width, initial-scale=1.0' name='viewport'>
 <title>Invalesco</title>
 <meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="xqfGjxJmLmgpePj1SCXdmmQBcJFpvwm62LEoKguSVJiNz16y1cy9wHCdppE+G246vYRNOEkdev97sw9C/JiCdg==" />
+<meta name="csrf-token" content="ifJs4veFaGludy2KFgwpi4tYmXIOcq4V/sY7JwZBUeX/tZC2AxaWLSJscAvPGq6sFfGmRKgUGOwUvM+fjKUS5Q==" />
 <link rel="stylesheet" media="all" href="/invalesco/assets/application-a724272c18a520092a02f4b1d7d7ef5682c5f581851a0b876ba72814676ec82e.css" />
 <link rel="shortcut icon" type="image/x-icon" href="/invalesco/images/favicon.ico" />
 <script src="/invalesco/assets/application-202a10f0301d8309ef11fb5ee871098e58cfa89ac177fb04028c2886989d7da7.js"></script>
@@ -21,7 +21,7 @@
 <div class='modal-content'></div>
 </div>
 </div>
-<h1>Determining factors for an a priori, probablistic prediction in League of Legends</h1>
+<h1>Determining factors for an a priori, probabilistic prediction in League of Legends</h1>
 <blockquote class='bs-callout bs-callout-warning'>
 Whoa there Charles Dickens, I didn't come here to read a novel!
 </blockquote>
@@ -37,7 +37,7 @@ I would have the studies elective. Scholarship is to be created not by compulsio
 <p>
 This document and software serves several concurrent purposes,
 <ul>
-<li>To learn and teach about probabalistic analysis and simluation,</li>
+<li>To learn and teach about probabilistic analysis and simulation,</li>
 <li>To engage the developer community and meta surrounding League of Legends,</li>
 <li>
 To compete in the
@@ -46,7 +46,7 @@ To compete in the
 </ul>
 </p>
 <h3>Background</h3>
-<p><a href="http://na.leagueoflegends.com/"><em>League of Legends</em></a> is a popular online multiplayer game developed by <a href="http://www.riotgames.com/">Riot Games</a>.  In normal play, the game pits two teams of 5 players against each other.  Each player selects one of 124 possible characters (called <em>champions</em>), each of which has various strengths and weaknesses.  Each champion has four <em>abilities</em> (such as a special attack or a healing spell) that can be activated by the player.  Each ability has a limit on how long the player must wait before using that ability again, called a <em>cooldown</em>.  The requist time can range from a seconds to several minutes.</p>
+<p><a href="http://na.leagueoflegends.com/"><em>League of Legends</em></a> is a popular online multiplayer game developed by <a href="http://www.riotgames.com/">Riot Games</a>.  In normal play, the game pits two teams of 5 players against each other.  Each player selects one of 124 possible characters (called <em>champions</em>), each of which has various strengths and weaknesses.  Each champion has four <em>abilities</em> (such as a special attack or a healing spell) that can be activated by the player.  Each ability has a limit on how long the player must wait before using that ability again, called a <em>cooldown</em>.  The requisite time can range from a seconds to several minutes.</p>
 
 <p>As both an April Fool's joke and a way to keep the game fun and interesting, Riot re-released the <a href="http://na.leagueoflegends.com/en/news/game-updates/patch/urf-rising"><em>Ultra Rapid Fire (URF) Mode</em></a>, best described by gaming website Kotaku:</p>
 <blockquote>
@@ -67,25 +67,25 @@ The classic problem in this space thus:
 <i>'There's a 70% chance of rain on Thursday.'</i>
 If it rains, you say it was a decent prediction, but if you are left high and dry by Friday, you can still say you are right, since it won't rain 3 times out 10.  The challenges to this kind of problem include
 <ul>
-<li>the forecast is itself a expressed as chance (a probability of the event occuring),</li>
-<li>you only have one observation, and the outcome is mutually exlcusive (either it rained or it did not), and</li>
+<li>the forecast is itself a expressed as chance (a probability of the event occurring),</li>
+<li>you only have one observation, and the outcome is mutually exclusive (either it rained or it did not), and</li>
 <li>the exact conditions may not appear again to test the prediction multiple times over.</li>
 </ul>
 </p>
 <p>We run into this same situation in League of Legends.  Since there are two teams in each match (and no ties), there is a boolean outcome (either <em>Red</em> or <em>Blue</em> team must win), and we are highly unlikely to ever see a second match with the <em>exact</em> same set of players, skills and champions in the same positions.</p>
 <h4>Brier score</h4>
-<p>The <a href="http://en.wikipedia.org/wiki/Brier_score">Brier Score</a> is a method to measure the accuracy of predictions expresses probablities when their outcomes are mutually excluse and discrete. You can calucate this by summing the square of the differences between the predicted probablity and the observed outcome (as 0 or 1), divided by the number of observations:</p>
+<p>The <a href="http://en.wikipedia.org/wiki/Brier_score">Brier Score</a> is a method to measure the accuracy of predictions expresses probabilities when their outcomes are mutually exclusive and discrete. You can calculate this by summing the square of the differences between the predicted probability and the observed outcome (as 0 or 1), divided by the number of observations:</p>
 <p class='text-center'>
 <small class='pull-right'>Attribution: Wikipedia</small>
 <img src="/invalesco/assets/brier_score-ab18f22ad1458e56d53f0788ae4e821eff7a78dcc1d3fa08726ae3f19ab8208d.png" alt="Brier score ab18f22ad1458e56d53f0788ae4e821eff7a78dcc1d3fa08726ae3f19ab8208d" />
 </p>
 <p>In League of Legends, we have one additional challenge in this area: the fact that nominal outcome of a match is 50-50.  This also means that any probabilistic predictor must be better calibrated than a coin flip (e.g. a Brier Score lower than 0.25) to be declared a meaningful tool.</p>
 <h3>A priori verus a posteriori analysis</h3>
-<p>Although several websites (such as <a href="http://www.leagueofgraphs.com/rankings/win-stats">League of Graphs</a>) have shown that the probablity of winning can be well-correlated to key events during the game, there is scant research on whether the outcome can be predicted accurately <a href="http://www.merriam-webster.com/dictionary/a%20priori">a priori</a> - i.e. predicted before the match starts.</p>
+<p>Although several websites (such as <a href="http://www.leagueofgraphs.com/rankings/win-stats">League of Graphs</a>) have shown that the probability of winning can be well-correlated to key events during the game, there is scant research on whether the outcome can be predicted accurately <a href="http://www.merriam-webster.com/dictionary/a%20priori">a priori</a> - i.e. predicted before the match starts.</p>
 
-<p>We largely ignore the timeline events in the match payload, because we mostly concerned with who the players are, which champions they pick, and what the final outcome was. Our goal therefore is to find a way to estimate a team's chances of winning based soley on their inputs, not their gameplay or execution.  This seems particuarlly relevant in URF mode, since resources are abudent and either skill nor strategy are obviious factors in URF gameplay.</p>
+<p>We largely ignore the timeline events in the match payload, because we mostly concerned with who the players are, which champions they pick, and what the final outcome was. Our goal therefore is to find a way to estimate a team's chances of winning based solely on their inputs, not their gameplay or execution.  This seems particularly relevant in URF mode, since resources are abundant and either skill nor strategy are obvious factors in URF gameplay.</p>
 
-<p>For example in tournament play, a well-timed skill shot can change the course of a battle, but in URF mode, a missed skill shot can just be followed by several more!  Futhermore the laning phase is easier and likely to be less critical for the aquisition of gold and early advantage.</p>
+<p>For example in tournament play, a well-timed skill shot can change the course of a battle, but in URF mode, a missed skill shot can just be followed by several more!  Furthermore the laning phase is easier and likely to be less critical for the acquisition of gold and early advantage.</p>
 <h3>Approach</h3>
 <ol>
 <li>Download as much URF mode match data as possible.</li>
@@ -96,7 +96,7 @@ If it rains, you say it was a decent prediction, but if you are left high and dr
 <h2>Analysis of winning factors</h2>
 <h3>Champion selection</h3>
 <p>
-With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  Within 100,000 downloaded URF mode matches, we only saw only a tiny fraction of the total possiblities.  Although it is apparent from gameplay that teams exhibit synergies or disonnance based on composition, the first analysis will have to focus on individual champions rather than the team collectively.
+With 124 champions to choose from, there are over 27 billion ways to choose a single 5 man team, and over 700 quintillion (729,972,479,623,688,294,400) possible 5v5 match ups (in blind pick mode).  Within 100,000 downloaded URF mode matches, we only saw only a tiny fraction of the total possibilities.  Although it is apparent from gameplay that teams exhibit synergies or dissonance based on composition, the first analysis will have to focus on individual champions rather than the team collectively.
 </p>
 <p>Since URF mode is <a href="http://leagueoflegends.wikia.com/wiki/Normal_game">blind-pick</a>, there is a fair chance that a single champion will appear on both teams.  When this occurs, we have three options when calculating the win rate:</p>
 <ol>
@@ -106,7 +106,7 @@ With 124 champions to choose from, there are over 27 billion ways to choose a si
 This metric best reports the champion's performance without regard to matches.  The metric can be used as a probability since
 <code>win% + loss% = 1</code>,
 </p>
-<p>However, this metric understates the effectivness when comparing two champions because the denominator 'double counts' a single match when the champion appears on both teams.  This metric</p>
+<p>However, this metric understates the effectiveness when comparing two champions because the denominator 'double counts' a single match when the champion appears on both teams.  This metric</p>
 </li>
 <li>
 <i>Wins divided by number of matches where the champion is present at least once.</i>
@@ -119,7 +119,7 @@ and creates 'noisy' and quixotical results such as in the case of a perfect mirr
 <li>
 <i>Wins divided by wins plus losses, but ignore any duplicate champions in a single match.</i>
 <p>
-For most analyses, we choose this option since the mirror match provides no meaningful information as which of the two would win when comparing team compositions on an individual basis.  This metric still retains the property that the sum of all probabilites is 1.
+For most analyses, we choose this option since the mirror match provides no meaningful information as which of the two would win when comparing team compositions on an individual basis.  This metric still retains the property that the sum of all probabilities is 1.
 </p>
 </li>
 </ol>
@@ -175,40 +175,40 @@ Standard deviation (multiplicative)
 </tbody>
 </table>
 <p>
-Given that a coin-flip would provide an accuracy of 50% and Brier score of 0.25, none of these algorithms are particuarlly well calibrated.
+Given that a coin-flip would provide an accuracy of 50% and Brier score of 0.25, none of these algorithms are particularly well calibrated.
 </p>
 <h3>Player experience</h3>
-<p>Given the wide range of players in League of Legends, the next varaible to consider whether player experience contributes to victory.  There are two obvious challenges in this analysis.</p>
+<p>Given the wide range of players in League of Legends, the next variable to consider whether player experience contributes to victory.  There are two obvious challenges in this analysis.</p>
 <p>
-First, the anonymous data for URF mode matches did not include the player's identity, so additional details about the player were unavailable.  An attribute such as total matches or victories would be a strong indicator of experience and/or dedication to League, but that statistic is not available here.  We only have two relevant attributes
+First, the anonymous data for URF mode matches did not include the player's identity, so additional details about the player were unavailable.  An attribute such as total matches or victories would be a strong indicator of experience and/or dedication to the game, but that statistic is not available to us.  We only have two relevant attributes,
 <a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/level.html'>player level</a>
 and
-the 'highest rank acheived' in this Season of play was included in the payload, which will have to stand as proxy for the skill of the player.
+the 'highest rank achieved' in this Season of play was included in the payload, which will have to stand as proxy for the skill of the player.
 </p>
 <p>
-Second, Riot already uses an algorithm to match teams with similarly skilled players, which makes analysing disparity more difficult.
+Second, Riot already uses an algorithm to match teams with similarly skilled players, which makes analyzing disparity more difficult.
 </p>
 <p>
-Even with these limitations, several results were gleamed from the data.  By assigning 'points' to each of the 8 ranks (
+Even with these limitations, the data show several interesting results.  By assigning 'points' to each of the 8 ranks (
 <i>Unranked, Bronze, Silver, Gold, etc</i>
 ), we can calculate the weight of each team.  Probability of greater differences between team strength
 <a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/rank/delta.html'>decreases logrithmically</a>
-. One fifth of matches were evenly matched, and over 70% had a difference of less than 4 points.  This demonstrates taht the matching system is quite fair.
+. One fifth of matches were evenly in points, and over 70% had a difference of less than 4 points.  This demonstrates that the matching system is quite fair.
 </p>
 <p>
-However, when we graph percent of upsets versus team rank, we see a pattern.  For each point of rank disparity, the stronger team had a
-<a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/rank/upsets.html'>+1% better chance</a>
-to win. Although the number of disparate team matches drops off quickly, the pattern holds.  Even in the long tail, we have 13 matches out of 110359 with a disparity above 14 (the equilivant to an all-_Gold_  team versus an all-_Unranked_ team), and the stronger teams had extremely high win rates over their weaker opponents.
+When we graph percent of upsets versus team rank, we see a pattern.  For each point of rank disparity, the stronger team gained a
+<a data-target='#modal' data-toggle='modal' href='/invalesco/urf/teams/rank/upsets.html'>+1% improved chance</a>
+to win. Although the number of disparate team matches drops off quickly, the pattern holds.  Even in the long tail, we have 13 matches out of 110359 with a disparity above 14 (the equivalent of an all-Gold team versus an all-Unranked team), and the stronger teams had extremely high win rates over their weaker opponents.
 Is it possible that higher ranked players simply chose better (or more winning) characters?  A simple linear regression of player rank versus win rates shows a slope of -0.00038 - essentially, zero.  We conclude that in general, the benefits of rank disparity between teams in a match are not connected to champion selection.
 </p>
 <h3>(Not all that glitters is) Gold</h3>
 <blockquote class='bs-callout'>
 If you're 50 gold short for an item, kill the enemy nexus.
-<footer>load screen tooltip, League of Legends.</footer>
+<footer>Load screen tooltip, League of Legends.</footer>
 </blockquote>
-<p>The League community recognizes that gold is a strong indicator of which team is ahead during a match.  This is jusfitifed by the virtious cycle whereby gold buys better items, which improves performance against creeps and other players, both of which provide gold when killed.  However, gold in URF mode is relatively easy to aquire and champions can achieve full builds in a fraction of the time required in a Normal game.</p>
+<p>The League community recognizes that gold is a strong indicator of which team is ahead during a match.  This is justified by the virtuous cycle whereby gold buys better items, which improves performance against creeps and other players, both of which provide gold when killed.  However, gold in URF mode is relatively easy to acquire and champions can achieve full builds in a fraction of the time required in a Normal game.</p>
 
-<p>Even so, does a gold advantage deterime the winner?</p>
+<p>Even so, does a gold advantage determine the winner?</p>
 <table class='table'>
 <thead>
 <tr>
@@ -240,20 +240,20 @@ Abolute (Boolean) Gold Advantage
 The answer is no, but sadly we find our best calibrated estimator yet - the team with the most gold is more closely calibrated to determining the winner.
 </p>
 <p>
-There are a few deficits in this analysis. Excess gold beyond a character's final build is not likely to be strongly indicitive of a winning position.  There is no understanding as to where the gold came from (creeps, objectives, kills), which have a strong affect on the balance (and thus victory) in the game.  Lastly, the winning team will usually aquire gold in the final push into the enemy base, which means the winning team already gets a bias in the final gold results.
+There are a few deficits in this analysis. Excess gold beyond a character's final build is not likely to be strongly indicative of a winning position.  There is no understanding as to where the gold came from (creeps, objectives, kills), which have a strong affect on the balance (and thus victory) in the game.  Lastly, the winning team will usually acquire gold in the final push into the enemy base, which means the winning team already gets a bias in the final gold results.
 </p>
 <h2>Conclusions</h2>
 <blockquote class='bs-callout'>
 Failure is always an option.
 <footer>Adam Savage</footer>
 </blockquote>
-<p>None of the factors explored provided enough information to build a coherent model for predicing the a priori winner.  We were close to matching some early game a posteriori predictions, such as First Blood, but additional research will be required to find a factor or combination of factors that can provide a better esitmator.</p>
+<p>None of the factors explored provided enough information to build a coherent model for predicting the a priori winner.  We were close to matching some early game a posteriori predictions, such as First Blood, but additional research will be required to find a factor or combination of factors that can provide a better estimator.</p>
 
-<p>It could also be the case that the Brier Score is a poor choice for scoring the prediction in League of Legends.  There is <a href="http://www.dailykos.com/story/2012/11/12/1160597/-Election-forecasting-and-the-problem-with-the-Brier-Score">active debate</a> that the Brier score favors "safe" prediction and inherently discourages prediction outside of the a widely expected value - of which 50-50% is a fanatastic prediction for two evenly-matched teams in League of Legends.</p>
+<p>It could also be the case that the Brier Score is a poor choice for scoring the prediction in League of Legends.  There is <a href="http://www.dailykos.com/story/2012/11/12/1160597/-Election-forecasting-and-the-problem-with-the-Brier-Score">active debate</a> that the Brier score favors "safe" prediction and inherently discourages prediction outside of the a widely expected value - of which 50-50% is a fantastic prediction for two evenly-matched teams in League of Legends.</p>
 
-<p>Furthermore, a <a href="http://en.wikipedia.org/wiki/Likelihood_function">log likihood</a> scoring method may be superior when the outcome is heavily favored one direction.  Given the game's positive-feedback cycle and ancedotal correlations between <a href="http://www.leagueofgraphs.com/rankings/win-stats#firstblood">game events and outcome</a>, we may need to explore other scoring mechanisms.</p>
+<p>Furthermore, a <a href="http://en.wikipedia.org/wiki/Likelihood_function">log likelihood</a> scoring method may be superior when the outcome is heavily favored one direction.  Given the game's positive-feedback cycle and anecdotal correlations between <a href="http://www.leagueofgraphs.com/rankings/win-stats#firstblood">game events and outcome</a>, we may need to explore other scoring mechanisms.</p>
 <h2>A tour of the code</h2>
-The git repository contains three branches which are not connected to the same tree.
+The [github repository](https://github.com/tercenya/invalesco) contains three unique branches.
 <h4>Branch: dataminer</h4>
 <p>Dataminer's sole purpose was to extract as much data from the <a href="https://developer.riotgames.com/docs/getting-started">Riot API endpoints</a> as possible.  Developer tokens are limited to 10 requests in 10 second, or 500 requests in 10 minutes.  The dataminer throttles requests to the slower of the two limits - one request every 1.25 seconds.</p>
 <p>
@@ -271,18 +271,18 @@ Scripts in
 load data or create subsequent collection that are needed for later processing.  Analysis scripts that test outcomes are located in
 <code>/bin/analysis</code>
 </p>
-<p>At one point there was some consideration of making the rails branch an interactive application for end-use and deploying the project ala <carry.gg>, but we could not collect enough data and build a model fast enough (or fast enough model) to provide real-time feedback on games just starting.</carry.gg></p>
+<p>At one point there was some consideration of making the rails branch an interactive application for end-use and deploying the project a la <carry.gg>, but we could not collect enough data and build a model fast enough (or fast enough model) to provide real-time feedback on games just starting.</carry.gg></p>
 
 <p>The web framework is <a href="http://getbootstrap.com/">Twitter Bootstrap 3</a>, assets (namely <a href="http://d3js.org/">d3.js</a>) are marshaled via bower.  You'll also need the aforementioned mongodb to run the app.</p>
 <h4>Branch: gh-pages</h4>
 <p>Although the underlying tool is a rails app, all pages are static once the data is generated, so the resultant pages were collected and uploaded as static resources.  This branch should have been created from a static site generator such as <a href="https://middlemanapp.com/">middleman</a>, but since the rails app already had all the necessary resources, scraping its output was easier than creating yet a third project.</p>
 <h2>Closing</h2>
 <h4>Special Thanks</h4>
-<p>Dr. Henry Bryant, for the resources on stochastic simluation and probablstic analysis.</p>
+<p>Dr. Henry Bryant, for the resources on stochastic simulation and probabilistic analysis.</p>
 
-<p>My WoW guild, <a href="http://www.slightlyover9000.com/forums/">Vanquish @ Firetree</a>, especially Jakeswims (for starting me on League), and maybe Browniess (for chewing me out about my Q's as Morgana).</p>
+<p>My WoW guild, <a href="http://www.slightlyover9000.com/forums/">Vanquish @ Firetree</a>, especially Jakeswims (for starting me on League), and maybe Browniess (for chewing me out about landing Q's as Morgana).</p>
 <h4>About the Author</h4>
-<p>Arinya is a fan of many video games and hard challenges, a full time nerds and definately one of the <a href="https://www.youtube.com/watch?v=8rwsuXHA7RA">crazy ones</a>.  He's a former Senior DevOps Engineer for Apple, and is currently a staff member in the <a href="https://afpc.tamu.edu/">Agricultural and Food Policy Center</a> at <a href="http://ww.tamu.edu">Texas A&amp;M University</a>, a <a href="http://agrilife.org/agrilife-agencies/research-home/">Research and Extension Services</a> unit in the department of <a href="http://agecon.tamu.edu/">Department of Agricultural Economics</a>.</p>
+<p>Craig is a fan of many video games and hard challenges, a full time nerds and definitely one of the <a href="https://www.youtube.com/watch?v=8rwsuXHA7RA">crazy ones</a>.  He's a former Senior DevOps Engineer for Apple, and is currently a staff member in the <a href="https://afpc.tamu.edu/">Agricultural and Food Policy Center</a> at <a href="http://ww.tamu.edu">Texas A&amp;M University</a>, a <a href="http://agrilife.org/agrilife-agencies/research-home/">Research and Extension Services</a> unit in the department of <a href="http://agecon.tamu.edu/">Department of Agricultural Economics</a>.</p>
 <hr>
 <a name='tldr'></a>
 <h3>TL;DR Summary</h3>
@@ -320,7 +320,7 @@ load data or create subsequent collection that are needed for later processing. 
 <p>
 <b>Not well.</b>
 </p>
-<p>Some estimates approach 60%, but our calibration score for nearly every metric was not encouraging.  But it could be that the way we scored the probablities did not work thanks to the heavy snowball effect and two-team nature of matches.</p>
+<p>Some estimates approach 60% accuracy, but our calibration score for nearly every metric was not encouraging.  But it could be that the way we scored the probabilities did not work thanks to the heavy snowball effect and two-team nature of matches.</p>
 <br>
 <h4>Can you predict Ranked games?</h4>
 <p>
@@ -332,7 +332,7 @@ load data or create subsequent collection that are needed for later processing. 
 </div>
 <footer>
 <p>
-&copy; Arinya 2015
+&copy; 2015 Craig M. Wellington 'Arinya'
 </p>
 </footer>
 </div>
