@@ -5,8 +5,8 @@ require 'addressable/uri'
 
 module Riot
   class Api
-    # DO NOT COMMIT THIS
-    API_KEY = 'dd59f117-bdbe-4d59-af22-9c3ebfb97e3b'
+    # API key rotated
+    API_KEY = 'GOES-HERE' 
     PATH = "/code/riot/data"
 
     attr_reader :region, :host
